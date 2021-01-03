@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Manga</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+    <link rel="stylesheet" href="{% static 'css/c-style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/tooltip.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/c-style-search.css' %}" />
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700,700italic&subset=latin,vietnamese' rel='stylesheet' />
+    <script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/tooltip.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/fsearch.js' %}"></script>
+    <!-- <link rel="stylesheet" href="https://manganelo.com/themes/starrate/css/style.css" />
+    <script type="text/javascript" src="https://manganelo.com/themes/starrate/js/starwarsjs.js"></script> -->
+</head>
+<body>
+    <div class="body-site">
+        <div class="container container-header">
+            <div class="logo">
+                <a href="/" title="Manga Online">
+                    <img src="{% static 'img/logo_small.png' %}" alt="Manga Online" title="Manga Online">
+                </a>
+            </div>
+            <div class="container-header-top">
+                <div class="box-search">
+                    <form name="frmsearch">
+                        <input id="search-story" autocomplete="off" placeholder="Tìm kiếm" class="search-story searchi">
+                            <div id="SearchResult">
+                                <ul></ul>
+                                    <div id="search-footer" class="searchf">
+                                </div>
+                            </div>
+                        <input style="display: none;">
+                    </form>
+                </div>
+                <div class="box-user-options">
+                    <a rel="nofollow" href="{% url 'manga:login' %}" class="user-login">Đăng nhập</a>
+                    <a rel="nofollow" href="{% url 'manga:register' %}" class="user-register">Đăng ký</a>
+                    <!-- <i class="mode-changer"></i> -->
+                </div>
+            </div>
+            <a class="header-mobile-menu">MENU</a>
+            <div class="header-menu">
+                <a class="a-h" href="{% url 'manga:home' %}" title="Manga Online">MANGA ONLINE</a>
+                <a class="a-h" href="{% url 'manga:all_manga' %}" title="LATEST MANGA">LATEST MANGA</a>
+                <a class="a-h" href="{% url 'manga:all_manga' %}" title="HOT MANGA">HOT MANGA</a>
+                <a class="a-h" href="{% url 'manga:all_manga' %}" title="NEWEST MANGA">NEWEST MANGA</a>
+            </div>
+        </div>
+        
+        <!-- <div class="container container-silder"> 
+            <h2 class="silder-title">TOP WEEK</h2>
+            <div id="owl-slider" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
+                <div class="owl-wrapper-outer">
+                    <div class="owl-wrapper" style="width: 7900px; left: 0px; display: block; transition: all 800ms ease 0s; transform: translate3d(-158px, 0px, 0px);">  
+                        <div class="owl-item" style="width: 158px;">
+                            <div class="item"> 
+                                <img class="img-loading" src="https://avt.mkklcdnv6.com/19/v/1-1583464475.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Tales of Demons and Gods"> 
+                                <div class="slide-caption"><h3><a rel="nofollow" class="text-nowrap a-h" href="https://manganelo.com/manga/hyer5231574354229" title="Tales of Demons and Gods">Tales Of Demons And Gods</a></h3>
+                                    <a rel="nofollow" class="text-nowrap a-h" href="https://manganelo.com/chapter/hyer5231574354229/chapter_308.1" title="Tales of Demons and Gods Chapter 308.1">Chapter 308.1</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div> 
+                <div class="owl-controls clickable">
+                    <div class="owl-buttons">
+                        <div class="owl-prev"></div>
+                    </div>
+                    <div class="owl-buttons-right">
+                        <div class="owl-next"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div> -->
+
+        
+        <div class="container container-main">
+            <div class="container-main-left">
+            <script type="text/javascript">
+                    $(document).ready(function() {
+                        tooltip();
+                        $.getJSON('https://manganelo.com/' + 'home_tooltips_json', function(manga) {
+                            var id = "";
+                            var str_id_isset = ",";
+                            $('a.tooltip').hover(function(e) {
+                                if (!$(this).hasClass('hastool')) {
+                                    id = $(this).attr('data-tooltip');
+                                    $.each(manga, function(key, val) {
+                                        if ("sticky_"+val.id == id && str_id_isset.indexOf(","+val.id+",") == -1) {
+                                            str_id_isset += val.id + ",";
+                                            $tt_no = '';
+                                            if(val.nameother.trim() != '') 
+                                                $tt_no = '<p><label>Alternative:</label>' + val.nameother + '</p>';
+                                            $tt_au = '';
+                                            if(val.author.trim() != '') 
+                                                $tt_au = '<p><label>Author(s):</label>' + val.author + '</p>';
+                                            $tooltip_add = '<div id="'+ id +'" class="atip"> <div id="tooltip"> <h3>' + val.name + '</h3> <div class="tooltip_main"> <div class="tooltip_detail"> <img class="img-loading" src="' + val.image + '" /> <div class="tooltip_detail_left">'+ $tt_no + $tt_au + '<p> <label>Update:</label>' + val.updatetime + '</p> <p> <label>View:</label>' + val.view + '</p> <p> <label>Genres:</label>' + val.genres + '</p> </div> </div> <div class="tooltip_summary"> <span>Summary : </span>' + val.description + '</div> </div> </div> </div>';
+                                            $('#mystickytooltip').append($tooltip_add);
+                                            return false;
+                                        }
+                                    });
+                                    $(this).addClass('hastool');
+                                }
+                                $(this).attr("title", "");
+                            }, function() {});
+                        });
+                    });
+                </script>
+            <div class="panel-content-homepage">
+            <h1 class="content-homepage-title">READ MANGA ONLINE - LATEST UPDATES</h1>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_26021" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/zero_point_idol" title="Zero Point Idol">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/42/d/15-1583493177.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Zero Point Idol" />
+            <em class="item-rate">4.2</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_26021" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/zero_point_idol" title="Zero Point Idol">Zero Point Idol</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Sanjing Jun Author">Sanjing Jun</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_123" title="Zero Point Idol Chapter 123: Worry">Chapter 123: Worry</a>
+            <i>38 mins ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_122" title="Zero Point Idol Chapter 122: The competition begins!">Chapter 122: The Competition Begins!</a>
+            <i>Dec 28,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_121" title="Zero Point Idol Chapter 121: Who am I to you?">Chapter 121: Who Am I To You?</a>
+            <i>Dec 17,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_33789" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/my922677" title="Beware of the Villainess!">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/3/i/21-1587084318.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Beware of the Villainess!" />
+            <em class="item-hot"></em> <em class="item-rate">4.9</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_33789" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/my922677" title="Beware of the Villainess!">Beware Of The Villainess!</a>
+            </h3>
+            <span class="text-nowrap item-author" title="뽕따맛스크류바 Author">뽕따맛스크류바</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/my922677/chapter_58" title="Beware of the Villainess! Chapter 58: testing">Chapter 58: Testing</a>
+            <i>40 mins ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/my922677/chapter_57" title="Beware of the Villainess! Chapter 57">Chapter 57</a>
+            <i>Dec 25,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/my922677/chapter_56" title="Beware of the Villainess! Chapter 56">Chapter 56</a>
+            <i>Dec 24,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35946" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/an924834" title="Shen Ze">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/42/e/22-1607134640.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Shen Ze" />
+            <em class="item-rate">4.5</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_35946" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/an924834" title="Shen Ze">Shen Ze</a>
+            </h3>
+            <span class="text-nowrap item-author" title="KRE,Djade Author">KRE,Djade</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/an924834/chapter_24" title="Shen Ze Chapter 24: The Human World [END]">Chapter 24: The Human World [End]</a>
+            <i>46 mins ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/an924834/chapter_23" title="Shen Ze Chapter 23: Jealousy">Chapter 23: Jealousy</a>
+            <i>46 mins ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/an924834/chapter_22" title="Shen Ze Chapter 22: Flesh">Chapter 22: Flesh</a>
+            <i>2 day ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35783" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ne924671" title="Unparalleled Path ~ Reincarnated as the AI for a Space Battleship ~">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/35/h/22-1604683694.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Unparalleled Path ~ Reincarnated as the AI for a Space Battleship ~" />
+            <em class="item-new"></em> <em class="item-rate">4.5</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_35783" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/ne924671" title="Unparalleled Path ~ Reincarnated as the AI for a Space Battleship ~">Unparalleled Path ~ Reincarnated As The Ai For A Space Battleship ~</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Matsuya Daisuki,Ishiguchi Juu Author">Matsuya Daisuki,Ishiguchi Juu</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ne924671/chapter_3" title="Unparalleled Path ~ Reincarnated as the AI for a Space Battleship ~ Chapter 3: Mutiny Course">Chapter 3: Mutiny Course</a>
+            <i>47 mins ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ne924671/chapter_2" title="Unparalleled Path ~ Reincarnated as the AI for a Space Battleship ~ Chapter 2: Reminiscence Course">Chapter 2: Reminiscence Course</a>
+            <i>Nov 07,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ne924671/chapter_1" title="Unparalleled Path ~ Reincarnated as the AI for a Space Battleship ~ Chapter 1: Reicarnation Course">Chapter 1: Reicarnation Course</a>
+            <i>Nov 07,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_34365" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/eu923253" title="Circumstances of a (Temporary) Bride">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/28/e/21-1592238798.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Circumstances of a (Temporary) Bride" />
+            <em class="item-rate">4.8</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_34365" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/eu923253" title="Circumstances of a (Temporary) Bride">Circumstances Of A (Temporary) Bride</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Yuusagi Kanou,Usagi Routo Author">Yuusagi Kanou,Usagi Routo</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/eu923253/chapter_6" title="Circumstances of a (Temporary) Bride Chapter 6">Chapter 6</a>
+            <i>47 mins ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/eu923253/chapter_5" title="Circumstances of a (Temporary) Bride Chapter 5">Chapter 5</a>
+            <i>Sep 24,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/eu923253/chapter_4" title="Circumstances of a (Temporary) Bride Chapter 4">Chapter 4</a>
+            <i>Jul 30,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_1071" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/guardians_of_the_video_game" title="Guardians of the Video Game">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/38/y/1-1583465227.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Guardians of the Video Game" />
+            <em class="item-rate">2.8</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_1071" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/guardians_of_the_video_game" title="Guardians of the Video Game">Guardians Of The Video Game</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Gasfard Author">Gasfard</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/guardians_of_the_video_game/chapter_201" title="Guardians of the Video Game Chapter 201: Ep. 200 - The Realm of Myths (Part 9)">Chapter 201: Ep. 200 - The Realm Of Myths (Part 9)</a>
+            <i>49 mins ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/guardians_of_the_video_game/chapter_200" title="Guardians of the Video Game Chapter 200: Ep. 199 - The Realm of Myths (Part 8)">Chapter 200: Ep. 199 - The Realm Of Myths (Part 8)</a>
+            <i>Dec 26,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/guardians_of_the_video_game/chapter_199" title="Guardians of the Video Game Chapter 199: Ep. 198 - The Realm of Myths (Part 7)">Chapter 199: Ep. 198 - The Realm Of Myths (Part 7)</a>
+            <i>Dec 19,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_25481" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ayi2548165456" title="Mairimashita! Iruma-kun">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/31/g/15-1583492700.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Mairimashita! Iruma-kun" />
+            <em class="item-hot"></em> <em class="item-rate">4.8</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_25481" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/ayi2548165456" title="Mairimashita! Iruma-kun">Mairimashita! Iruma-Kun</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Nishi Osamu Author">Nishi Osamu</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ayi2548165456/chapter_185.1" title="Mairimashita! Iruma-kun Chapter 185.1: Babyls Calendar 2021">Chapter 185.1: Babyls Calendar 2021</a>
+            <i>1 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ayi2548165456/chapter_185" title="Mairimashita! Iruma-kun Chapter 185: The Evidol Games">Chapter 185: The Evidol Games</a>
+            <i>Dec 27,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ayi2548165456/chapter_184" title="Mairimashita! Iruma-kun Chapter 184: A Promise to Kerori">Chapter 184: A Promise To Kerori</a>
+            <i>Dec 12,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_27428" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/buccafe" title="Buccafé!">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/16/z/16-1583494085.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Buccafé!" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_27428" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/buccafe" title="Buccafé!">Buccafé!</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Kobayashi Roku Author">Kobayashi Roku</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/buccafe/chapter_252" title="Buccafé! Chapter 252: The Buddhist World's February 14th">Chapter 252: The Buddhist World's February 14Th</a>
+            <i>1 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/buccafe/chapter_251" title="Buccafé! Chapter 251: The Suitable Chocolate is...">Chapter 251: The Suitable Chocolate Is...</a>
+            <i>1 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/buccafe/chapter_250" title="Buccafé! Chapter 250: Over on This Side">Chapter 250: Over On This Side</a>
+            <i>1 hour ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_29650" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ua918538" title="Yankee-kun to Hakujou Gaaru">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/49/i/17-1583497047.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Yankee-kun to Hakujou Gaaru" />
+            <em class="item-rate">4.9</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_29650" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/ua918538" title="Yankee-kun to Hakujou Gaaru">Yankee-Kun To Hakujou Gaaru</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Uoyama Author">Uoyama</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ua918538/chapter_60" title="Yankee-kun to Hakujou Gaaru Chapter 60: Love And Friendship ②">Chapter 60: Love And Friendship ②</a>
+            <i>1 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ua918538/chapter_59" title="Yankee-kun to Hakujou Gaaru Chapter 59: Love And Friendship ①">Chapter 59: Love And Friendship ①</a>
+            <i>1 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ua918538/chapter_58" title="Yankee-kun to Hakujou Gaaru Chapter 58: Curse Of Lips ③">Chapter 58: Curse Of Lips ③</a>
+            <i>1 hour ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_19547" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/crocodile_precinct" title="Crocodile Precinct">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/35/j/13-1583489008.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Crocodile Precinct" />
+            <em class="item-rate">4.1</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_19547" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/crocodile_precinct" title="Crocodile Precinct">Crocodile Precinct</a>
+            </h3>
+            <span class="text-nowrap item-author" title="SHINOHARA Tohru Author">SHINOHARA Tohru</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/crocodile_precinct/chapter_17" title="Crocodile Precinct Vol.8 Chapter 17: Smoke in the Sky">Vol.8 Chapter 17: Smoke In The Sky</a>
+            <i>1 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/crocodile_precinct/chapter_16.2" title="Crocodile Precinct Vol.8 Chapter 16.2">Vol.8 Chapter 16.2</a>
+            <i>May 28,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/crocodile_precinct/chapter_16.1" title="Crocodile Precinct Vol.8 Chapter 16.1">Vol.8 Chapter 16.1</a>
+            <i>May 28,2020</i>
+            </p>
+            </div>
+             </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_444" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ardour" title="Ardour">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/17/e/1-1583464364.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Ardour" />
+            <em class="item-rate">4</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_444" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/ardour" title="Ardour">Ardour</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Wu Rou Xuan Author">Wu Rou Xuan</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ardour/chapter_41" title="Ardour Vol.9 Chapter 41: Abandoned">Vol.9 Chapter 41: Abandoned</a>
+            <i>1 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ardour/chapter_40" title="Ardour Vol.8 Chapter 40: Tea Gathering">Vol.8 Chapter 40: Tea Gathering</a>
+            <i>Oct 18,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ardour/chapter_39" title="Ardour Vol.8 Chapter 39: Special Training">Vol.8 Chapter 39: Special Training</a>
+            <i>May 27,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_28631" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/wi917519" title="What An Average Way Koiko Goes!">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/11/v/17-1583495692.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="What An Average Way Koiko Goes!" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_28631" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/wi917519" title="What An Average Way Koiko Goes!">What An Average Way Koiko Goes!</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Nanaji Nagamu Author">Nanaji Nagamu</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/wi917519/chapter_26" title="What An Average Way Koiko Goes! Vol.5 Chapter 26">Vol.5 Chapter 26</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/wi917519/chapter_25" title="What An Average Way Koiko Goes! Vol.5 Chapter 25">Vol.5 Chapter 25</a>
+            <i>Nov 06,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/wi917519/chapter_24" title="What An Average Way Koiko Goes! Vol.5 Chapter 24">Vol.5 Chapter 24</a>
+            <i>Sep 11,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_34829" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/qj923717" title="Hanazono Twins">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/46/t/21-1596946123.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Hanazono Twins" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_34829" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/qj923717" title="Hanazono Twins">Hanazono Twins</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Nena Kitajima Author">Nena Kitajima</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qj923717/chapter_24" title="Hanazono Twins Chapter 24: Inomura Family's Surprise">Chapter 24: Inomura Family's Surprise</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qj923717/chapter_23" title="Hanazono Twins Chapter 23: Momo’s Conditions">Chapter 23: Momo’S Conditions</a>
+            <i>Dec 20,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qj923717/chapter_22" title="Hanazono Twins Chapter 22: Imura Momo">Chapter 22: Imura Momo</a>
+            <i>Dec 16,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35031" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/nr923919" title="Koibito wa Oni no Hime">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/4/x/22-1598586110.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Koibito wa Oni no Hime" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_35031" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/nr923919" title="Koibito wa Oni no Hime">Koibito Wa Oni No Hime</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Saho Author">Saho</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/nr923919/chapter_11" title="Koibito wa Oni no Hime Chapter 11">Chapter 11</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/nr923919/chapter_10" title="Koibito wa Oni no Hime Chapter 10">Chapter 10</a>
+            <i>Dec 09,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/nr923919/chapter_9" title="Koibito wa Oni no Hime Chapter 9">Chapter 9</a>
+            <i>Nov 18,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35710" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/km924598" title="Rivnes">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/32/l/22-1603767541.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Rivnes" />
+            <em class="item-new"></em> <em class="item-rate">4.8</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_35710" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/km924598" title="Rivnes">Rivnes</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Doumoto Yuuki Author">Doumoto Yuuki</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/km924598/chapter_13.5" title="Rivnes Chapter 13.5: Me, My Best Friend, and The Dangerous Senpai">Chapter 13.5: Me, My Best Friend, And The Dangerous Senpai</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/km924598/chapter_13" title="Rivnes Chapter 13: Me, My Little Sister, and The Hot Springs Trip (1)">Chapter 13: Me, My Little Sister, And The Hot Springs Trip (1)</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/km924598/chapter_12" title="Rivnes Chapter 12: Me, My Little Sister, and The Rice Riot">Chapter 12: Me, My Little Sister, And The Rice Riot</a>
+            <i>2 hour ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_183" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/dungeon_ni_deai_o_motomeru_no_wa_machigatte_iru_darou_ka_gaiden_sword_oratoria" title="Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka Gaiden - Sword Oratoria">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/8/i/1-1583463995.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka Gaiden - Sword Oratoria" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_183" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/dungeon_ni_deai_o_motomeru_no_wa_machigatte_iru_darou_ka_gaiden_sword_oratoria" title="Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka Gaiden - Sword Oratoria">Dungeon Ni Deai O Motomeru No Wa Machigatte Iru Darou Ka Gaiden - Sword Oratoria</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Oomori Fujino, Yagi Takashi Author">Oomori Fujino, Yagi Takashi</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/dungeon_ni_deai_o_motomeru_no_wa_machigatte_iru_darou_ka_gaiden_sword_oratoria/chapter_64" title="Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka Gaiden - Sword Oratoria Vol.15 Chapter 64: Thanatos">Vol.15 Chapter 64: Thanatos</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/dungeon_ni_deai_o_motomeru_no_wa_machigatte_iru_darou_ka_gaiden_sword_oratoria/chapter_63" title="Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka Gaiden - Sword Oratoria Vol.15 Chapter 63: Extra">Vol.15 Chapter 63: Extra</a>
+            <i>Dec 26,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/dungeon_ni_deai_o_motomeru_no_wa_machigatte_iru_darou_ka_gaiden_sword_oratoria/chapter_62" title="Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka Gaiden - Sword Oratoria Vol.15 Chapter 62: Nightmare">Vol.15 Chapter 62: Nightmare</a>
+            <i>Dec 23,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_28254" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/expressionless_face_girl_and_emotional_face_boy" title="Expressionless Face Girl and Emotional Face Boy">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/48/a/16-1583495192.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Expressionless Face Girl and Emotional Face Boy" />
+            <em class="item-rate">4.8</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_28254" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/expressionless_face_girl_and_emotional_face_boy" title="Expressionless Face Girl and Emotional Face Boy">Expressionless Face Girl And Emotional Face Boy</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Fuyu Azuma Author">Fuyu Azuma</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/expressionless_face_girl_and_emotional_face_boy/chapter_49" title="Expressionless Face Girl and Emotional Face Boy Vol.4 Chapter 49: Kashiwada-san and Oota-kun's Memories">Vol.4 Chapter 49: Kashiwada-San And Oota-Kun's Memories</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/expressionless_face_girl_and_emotional_face_boy/chapter_48" title="Expressionless Face Girl and Emotional Face Boy Vol.4 Chapter 48: Kashiwada-san and the Chorus Competition">Vol.4 Chapter 48: Kashiwada-San And The Chorus Competition</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/expressionless_face_girl_and_emotional_face_boy/chapter_47" title="Expressionless Face Girl and Emotional Face Boy Vol.4 Chapter 47: Kashiwada-san and the Large Disturbance">Vol.4 Chapter 47: Kashiwada-San And The Large Disturbance</a>
+            <i>Dec 25,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_4285" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/gochuumon_wa_usagi_desu_ka" title="Gochuumon wa Usagi Desu ka?">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/40/g/3-1583469260.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Gochuumon wa Usagi Desu ka?" />
+            <em class="item-rate">4.8</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_4285" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/gochuumon_wa_usagi_desu_ka" title="Gochuumon wa Usagi Desu ka?">Gochuumon Wa Usagi Desu Ka?</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Koi Author">Koi</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/gochuumon_wa_usagi_desu_ka/chapter_109" title="Gochuumon wa Usagi Desu ka? Vol.9 Chapter 109: Treasure Box Roller Coaster">Vol.9 Chapter 109: Treasure Box Roller Coaster</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/gochuumon_wa_usagi_desu_ka/chapter_83" title="Gochuumon wa Usagi Desu ka? Vol.7 Chapter 10">Vol.7 Chapter 10</a>
+            <i>Aug 25,2019</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/gochuumon_wa_usagi_desu_ka/chapter_82" title="Gochuumon wa Usagi Desu ka? Vol.7 Chapter 9">Vol.7 Chapter 9</a>
+            <i>Aug 25,2019</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_29609" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/jo918497" title="I Am Not A Succubus">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/47/x/17-1583496991.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="I Am Not A Succubus" />
+            <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_29609" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/jo918497" title="I Am Not A Succubus">I Am Not A Succubus</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Horitomo Author">Horitomo</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/jo918497/chapter_6" title="I Am Not A Succubus Chapter 6: A Centaur's Struggles Against Fate: Second Half">Chapter 6: A Centaur's Struggles Against Fate: Second Half</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/jo918497/chapter_5" title="I Am Not A Succubus Chapter 5: A Centaur's Struggles Against Fate: First Half">Chapter 5: A Centaur's Struggles Against Fate: First Half</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/jo918497/chapter_4.5" title="I Am Not A Succubus Chapter 4.5: Extra: At Last, Tomorrow">Chapter 4.5: Extra: At Last, Tomorrow</a>
+            <i>Dec 02,2019</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_31979" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/du920867" title="The Archmage's Daughter">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/34/r/19-1583500454.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Archmage's Daughter" />
+            <em class="item-hot"></em> <em class="item-rate">4.8</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_31979" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/du920867" title="The Archmage's Daughter">The Archmage's Daughter</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Moon Seora,Saebyeokae Author">Moon Seora,Saebyeokae</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/du920867/chapter_46" title="The Archmage's Daughter Chapter 46">Chapter 46</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/du920867/chapter_45" title="The Archmage's Daughter Chapter 45">Chapter 45</a>
+            <i>11 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/du920867/chapter_44" title="The Archmage's Daughter Chapter 44">Chapter 44</a>
+            <i>Dec 23,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35808" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/rp924696" title="Sei-chan, Your Love Is Too Much!">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/36/i/22-1605000646.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Sei-chan, Your Love Is Too Much!" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_35808" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/rp924696" title="Sei-chan, Your Love Is Too Much!">Sei-Chan, Your Love Is Too Much!</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Segawa Sasa Author">Segawa Sasa</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/rp924696/chapter_10" title="Sei-chan, Your Love Is Too Much! Chapter 10">Chapter 10</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/rp924696/chapter_9" title="Sei-chan, Your Love Is Too Much! Chapter 9">Chapter 9</a>
+            <i>Dec 26,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/rp924696/chapter_8" title="Sei-chan, Your Love Is Too Much! Chapter 8">Chapter 8</a>
+            <i>Dec 19,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_29862" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ni918750" title="The Justice of Villainous Woman">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/6/y/18-1583497355.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Justice of Villainous Woman" />
+            <em class="item-hot"></em> <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_29862" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/ni918750" title="The Justice of Villainous Woman">The Justice Of Villainous Woman</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Sola Author">Sola</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ni918750/chapter_133" title="The Justice of Villainous Woman Chapter 133">Chapter 133</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ni918750/chapter_132" title="The Justice of Villainous Woman Chapter 132">Chapter 132</a>
+            <i>11 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ni918750/chapter_131" title="The Justice of Villainous Woman Chapter 131">Chapter 131</a>
+            <i>Dec 28,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_34978" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/oq923866" title="Odoru Respawn">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/2/p/22-1598166220.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Odoru Respawn" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_34978" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/oq923866" title="Odoru Respawn">Odoru Respawn</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Kentaro Mikashima Author">Kentaro Mikashima</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/oq923866/chapter_8" title="Odoru Respawn Chapter 8: Chained to the Other Side of the Mirror">Chapter 8: Chained To The Other Side Of The Mirror</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/oq923866/chapter_7" title="Odoru Respawn Chapter 7: Amen to the God of the Blue Note">Chapter 7: Amen To The God Of The Blue Note</a>
+            <i>Dec 10,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/oq923866/chapter_6" title="Odoru Respawn Chapter 6: Go on a Reset Marathon until you hit your Destiny!">Chapter 6: Go On A Reset Marathon Until You Hit Your Destiny!</a>
+            <i>Nov 07,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_29592" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/hn918480" title="Release That Witch">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/47/i/17-1583496971.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Release That Witch" />
+            <em class="item-hot"></em> <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_29592" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/hn918480" title="Release That Witch">Release That Witch</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Er Mu, Dr Woodman Author">Er Mu, Dr Woodman</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/hn918480/chapter_217" title="Release That Witch Chapter 217">Chapter 217</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/hn918480/chapter_216" title="Release That Witch Chapter 216">Chapter 216</a>
+            <i>Dec 29,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/hn918480/chapter_215" title="Release That Witch Chapter 215">Chapter 215</a>
+            <i>Dec 25,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_28291" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/persona_4_the_ultimax_ultra_suplex_hold" title="Persona 4: The Ultimax Ultra Suplex Hold">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/49/l/16-1583495241.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Persona 4: The Ultimax Ultra Suplex Hold" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_28291" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/persona_4_the_ultimax_ultra_suplex_hold" title="Persona 4: The Ultimax Ultra Suplex Hold">Persona 4: The Ultimax Ultra Suplex Hold</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Atlus, Rokuro Saitou Author">Atlus, Rokuro Saitou</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/persona_4_the_ultimax_ultra_suplex_hold/chapter_28" title="Persona 4: The Ultimax Ultra Suplex Hold Chapter 28: Fall in the Light">Chapter 28: Fall In The Light</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/persona_4_the_ultimax_ultra_suplex_hold/chapter_27" title="Persona 4: The Ultimax Ultra Suplex Hold Chapter 27: Confession">Chapter 27: Confession</a>
+            <i>3 day ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/persona_4_the_ultimax_ultra_suplex_hold/chapter_26" title="Persona 4: The Ultimax Ultra Suplex Hold Chapter 26: Like a Curse, Like a Wish">Chapter 26: Like A Curse, Like A Wish</a>
+            <i>3 day ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_31921" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/pk920809" title="Half elves of Fall in love">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/32/m/19-1583500370.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Half elves of Fall in love" />
+            <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_31921" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/pk920809" title="Half elves of Fall in love">Half Elves Of Fall In Love</a>
+            </h3>
+            <span class="text-nowrap item-author" title="George Kamio,Rion Izumi Author">George Kamio,Rion Izumi</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/pk920809/chapter_6" title="Half elves of Fall in love Chapter 6">Chapter 6</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/pk920809/chapter_5" title="Half elves of Fall in love Chapter 5">Chapter 5</a>
+            <i>Oct 27,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/pk920809/chapter_4" title="Half elves of Fall in love Chapter 4">Chapter 4</a>
+            <i>Sep 07,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35110" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/tf923998" title="Super Soldier">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/8/c/22-1599068059.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Super Soldier" />
+            <em class="item-rate">4.3</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_35110" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/tf923998" title="Super Soldier">Super Soldier</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Qianhui Animation Author">Qianhui Animation</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/tf923998/chapter_13" title="Super Soldier Chapter 13">Chapter 13</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/tf923998/chapter_12" title="Super Soldier Chapter 12">Chapter 12</a>
+            <i>Dec 26,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/tf923998/chapter_11" title="Super Soldier Chapter 11">Chapter 11</a>
+            <i>Dec 18,2020</i>
+             </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35979" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/wo924867" title="I Became the Ugly Lady">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/43/q/22-1607396991.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="I Became the Ugly Lady" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_35979" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/wo924867" title="I Became the Ugly Lady">I Became The Ugly Lady</a>
+            </h3>
+            <span class="text-nowrap item-author" title="정하임 Author">정하임</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/wo924867/chapter_14" title="I Became the Ugly Lady Chapter 14">Chapter 14</a>
+            <i>2 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/wo924867/chapter_13" title="I Became the Ugly Lady Chapter 13">Chapter 13</a>
+            <i>Dec 25,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/wo924867/chapter_12" title="I Became the Ugly Lady Chapter 12">Chapter 12</a>
+            <i>Dec 18,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_32690" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/eg921578" title="Otherworldly Evil Monarch">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/11/n/20-1583501478.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Otherworldly Evil Monarch" />
+            <em class="item-hot"></em> <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_32690" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/eg921578" title="Otherworldly Evil Monarch">Otherworldly Evil Monarch</a>
+            </h3>
+            <span class="text-nowrap item-author" title=" Fengling tianxia	 Author"> Fengling tianxia	</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/eg921578/chapter_79" title="Otherworldly Evil Monarch Chapter 79">Chapter 79</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/eg921578/chapter_78" title="Otherworldly Evil Monarch Chapter 78">Chapter 78</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/eg921578/chapter_77" title="Otherworldly Evil Monarch Chapter 77">Chapter 77</a>
+            <i>2 day ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35280" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/xl924168" title="Under the Cherry Blossoms">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/14/t/22-1600399018.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Under the Cherry Blossoms" />
+            <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_35280" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/xl924168" title="Under the Cherry Blossoms">Under The Cherry Blossoms</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Dodam-eo,Marzzo,Redgu,Sincere Author">Dodam-eo,Marzzo,Redgu,Sincere</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/xl924168/chapter_24" title="Under the Cherry Blossoms Chapter 24">Chapter 24</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/xl924168/chapter_23" title="Under the Cherry Blossoms Chapter 23">Chapter 23</a>
+            <i>Dec 26,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/xl924168/chapter_22" title="Under the Cherry Blossoms Chapter 22">Chapter 22</a>
+            <i>Dec 20,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35087" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/rz923975" title="The Devious New Employee">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/7/d/22-1598893049.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Devious New Employee" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_35087" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/rz923975" title="The Devious New Employee">The Devious New Employee</a>
+            </h3>
+            <span class="text-nowrap item-author" title="언정이 Author">언정이</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/rz923975/chapter_20" title="The Devious New Employee Chapter 20">Chapter 20</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/rz923975/chapter_19" title="The Devious New Employee Chapter 19">Chapter 19</a>
+            <i>Dec 26,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/rz923975/chapter_18" title="The Devious New Employee Chapter 18">Chapter 18</a>
+            <i>Dec 19,2020</i>
+            </p>
+            </div>
+             </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_34535" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/gw923423" title="King Killer Reborn">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/35/f/21-1595516125.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="King Killer Reborn" />
+            <em class="item-rate">4.5</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_34535" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/gw923423" title="King Killer Reborn">King Killer Reborn</a>
+            </h3>
+            <span class="text-nowrap item-author" title="箫勺映画-调羹/两只猫 Author">箫勺映画-调羹/两只猫</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/gw923423/chapter_61" title="King Killer Reborn Chapter 61">Chapter 61</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/gw923423/chapter_60" title="King Killer Reborn Chapter 60">Chapter 60</a>
+            <i>2 day ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/gw923423/chapter_59" title="King Killer Reborn Chapter 59">Chapter 59</a>
+            <i>Dec 27,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35586" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/so924474" title="Martial God Asura">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/27/i/22-1602557564.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Martial God Asura" />
+            <em class="item-rate">4.4</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_35586" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/so924474" title="Martial God Asura">Martial God Asura</a>
+            </h3>
+            <span class="text-nowrap item-author" title="善良的小蜜蜂啊 Author">善良的小蜜蜂啊</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/so924474/chapter_44" title="Martial God Asura Chapter 44">Chapter 44</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/so924474/chapter_43" title="Martial God Asura Chapter 43">Chapter 43</a>
+            <i>13 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/so924474/chapter_42" title="Martial God Asura Chapter 42">Chapter 42</a>
+            <i>15 hour ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_27513" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/martial_peak" title="Martial Peak">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/20/b/16-1583494192.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Martial Peak" />
+            <em class="item-ss"></em> <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_27513" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/martial_peak" title="Martial Peak">Martial Peak</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Momo (ii) Author">Momo (ii)</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/martial_peak/chapter_874" title="Martial Peak Chapter 874">Chapter 874</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/martial_peak/chapter_873" title="Martial Peak Chapter 873: Soul Fission!">Chapter 873: Soul Fission!</a>
+            <i>15 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/martial_peak/chapter_872" title="Martial Peak Chapter 872">Chapter 872</a>
+            <i>1 day ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_28981" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/sl917869" title="Gradually close to the heart">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/24/x/17-1583496150.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Gradually close to the heart" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_28981" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/sl917869" title="Gradually close to the heart">Gradually Close To The Heart</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Ju Zhi Author">Ju Zhi</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/sl917869/chapter_85" title="Gradually close to the heart Chapter 85">Chapter 85</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/sl917869/chapter_83" title="Gradually close to the heart Chapter 83">Chapter 83</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/sl917869/chapter_82" title="Gradually close to the heart Chapter 82">Chapter 82</a>
+            <i>3 hour ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_26829" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/uay26829564564" title="Jinmen">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/6/f/16-1583493682.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Jinmen" />
+            <em class="item-rate">4.5</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_26829" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/uay26829564564" title="Jinmen">Jinmen</a>
+            </h3>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/uay26829564564/chapter_32" title="Jinmen Vol.4 Chapter 32: Last Request">Vol.4 Chapter 32: Last Request</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/uay26829564564/chapter_31.5" title="Jinmen Vol.3 Chapter 31.5">Vol.3 Chapter 31.5</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/uay26829564564/chapter_31" title="Jinmen Vol.3 Chapter 31: Farewell Forever">Vol.3 Chapter 31: Farewell Forever</a>
+            <i>3 hour ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_2242" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/makosan_to_hachisukakun" title="Mako-san to Hachisuka-kun.">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/28/x/2-1583466815.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Mako-san to Hachisuka-kun." />
+            <em class="item-rate">4.9</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_2242" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/makosan_to_hachisukakun" title="Mako-san to Hachisuka-kun.">Mako-San To Hachisuka-Kun.</a>
+            </h3>
+            <span class="text-nowrap item-author" title="221 Author">221</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/makosan_to_hachisukakun/chapter_39" title="Mako-san to Hachisuka-kun. Vol.5 Chapter 39: Misunderstanding">Vol.5 Chapter 39: Misunderstanding</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/makosan_to_hachisukakun/chapter_38.75" title="Mako-san to Hachisuka-kun. Vol.5 Chapter 38.75: Hate?">Vol.5 Chapter 38.75: Hate?</a>
+            <i>Dec 26,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/makosan_to_hachisukakun/chapter_38.5" title="Mako-san to Hachisuka-kun. Vol.4 Chapter 38.5: Romantic">Vol.4 Chapter 38.5: Romantic</a>
+            <i>Dec 03,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_32617" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/da921505" title="Prince of Genius Rise Worst Kingdom ~Yes, Treason It Will Do~">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/8/u/20-1583501363.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Prince of Genius Rise Worst Kingdom ~Yes, Treason It Will Do~" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_32617" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/da921505" title="Prince of Genius Rise Worst Kingdom ~Yes, Treason It Will Do~">Prince Of Genius Rise Worst Kingdom ~Yes, Treason It Will Do~</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Tooru Toba,Emuda Author">Tooru Toba,Emuda</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/da921505/chapter_6" title="Prince of Genius Rise Worst Kingdom ~Yes, Treason It Will Do~ Vol.1 Chapter 6">Vol.1 Chapter 6</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/da921505/chapter_5" title="Prince of Genius Rise Worst Kingdom ~Yes, Treason It Will Do~ Vol.1 Chapter 5">Vol.1 Chapter 5</a>
+            <i>3 day ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/da921505/chapter_4" title="Prince of Genius Rise Worst Kingdom ~Yes, Treason It Will Do~ Vol.1 Chapter 4">Vol.1 Chapter 4</a>
+            <i>Jun 22,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_22696" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/seikimatsu_leader_den_takeshi" title="Seikimatsu Leader Den Takeshi!">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/38/p/14-1583491092.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Seikimatsu Leader Den Takeshi!" />
+            <em class="item-rate">2.1</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_22696" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/seikimatsu_leader_den_takeshi" title="Seikimatsu Leader Den Takeshi!">Seikimatsu Leader Den Takeshi!</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Shimabukuro Mitsutoshi Author">Shimabukuro Mitsutoshi</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/seikimatsu_leader_den_takeshi/chapter_60" title="Seikimatsu Leader Den Takeshi! Vol.4 Chapter 60: The Reason for Fighting...!!">Vol.4 Chapter 60: The Reason For Fighting...!!</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/seikimatsu_leader_den_takeshi/chapter_59" title="Seikimatsu Leader Den Takeshi! Vol.4 Chapter 59: The Moment of Reunion...!!">Vol.4 Chapter 59: The Moment Of Reunion...!!</a>
+            <i>Dec 01,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/seikimatsu_leader_den_takeshi/chapter_58" title="Seikimatsu Leader Den Takeshi! Vol.4 Chapter 58: Angry Men...!!">Vol.4 Chapter 58: Angry Men...!!</a>
+            <i>Dec 01,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_32152" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/mx921040" title="I Was Born As The Demon Lord's Daughter">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/41/i/19-1583500679.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="I Was Born As The Demon Lord's Daughter" />
+            <em class="item-hot"></em> <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_32152" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/mx921040" title="I Was Born As The Demon Lord's Daughter">I Was Born As The Demon Lord's Daughter</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Inballo,Garamgee,Eunmin,Yeul Author">Inballo,Garamgee,Eunmin,Yeul</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/mx921040/chapter_49" title="I Was Born As The Demon Lord's Daughter Chapter 49">Chapter 49</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/mx921040/chapter_48" title="I Was Born As The Demon Lord's Daughter Chapter 48">Chapter 48</a>
+            <i>2 day ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/mx921040/chapter_47" title="I Was Born As The Demon Lord's Daughter Chapter 47">Chapter 47</a>
+            <i>Dec 29,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_34654" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/fi923542" title="Fighting Spirit Mainland">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/39/v/21-1595949883.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Fighting Spirit Mainland" />
+            <em class="item-rate">4.5</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_34654" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/fi923542" title="Fighting Spirit Mainland">Fighting Spirit Mainland</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Eat Nest Head + Whale Reading Every Day Author">Eat Nest Head + Whale Reading Every Day</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/fi923542/chapter_28" title="Fighting Spirit Mainland Chapter 28">Chapter 28</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/fi923542/chapter_27" title="Fighting Spirit Mainland Chapter 27">Chapter 27</a>
+            <i>2 day ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/fi923542/chapter_26" title="Fighting Spirit Mainland Chapter 26">Chapter 26</a>
+            <i>Dec 26,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_28370" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/the_ghostly_doctor" title="The Ghostly Doctor">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/2/k/17-1583495347.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Ghostly Doctor" />
+            <em class="item-rate">4.2</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_28370" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/the_ghostly_doctor" title="The Ghostly Doctor">The Ghostly Doctor</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Yuan man dongman Author">Yuan man dongman</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/the_ghostly_doctor/chapter_303" title="The Ghostly Doctor Chapter 303">Chapter 303</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/the_ghostly_doctor/chapter_302" title="The Ghostly Doctor Chapter 302">Chapter 302</a>
+            <i>Dec 28,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/the_ghostly_doctor/chapter_301" title="The Ghostly Doctor Chapter 301">Chapter 301</a>
+            <i>Dec 24,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_30209" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/si919097" title="Yama of The Hell">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/19/p/18-1583497862.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Yama of The Hell" />
+            <em class="item-rate">3.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_30209" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/si919097" title="Yama of The Hell">Yama Of The Hell</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Feihua Studio Author">Feihua Studio</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/si919097/chapter_112" title="Yama of The Hell Chapter 112">Chapter 112</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/si919097/chapter_111" title="Yama of The Hell Chapter 111">Chapter 111</a>
+            <i>Dec 29,2020</i>
+            </p>
+             <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/si919097/chapter_110" title="Yama of The Hell Chapter 110">Chapter 110</a>
+            <i>Dec 29,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_28190" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/strongest_anti_meta" title="Strongest Anti M.E.T.A">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/45/p/16-1583495108.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Strongest Anti M.E.T.A" />
+            <em class="item-hot"></em> <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_28190" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/strongest_anti_meta" title="Strongest Anti M.E.T.A">Strongest Anti M.e.t.a</a>
+            </h3>
+            <span class="text-nowrap item-author" title="初樱社 Author">初樱社</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/strongest_anti_meta/chapter_238" title="Strongest Anti M.E.T.A Chapter 238">Chapter 238</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/strongest_anti_meta/chapter_237" title="Strongest Anti M.E.T.A Chapter 237">Chapter 237</a>
+            <i>22 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/strongest_anti_meta/chapter_236" title="Strongest Anti M.E.T.A Chapter 236: Underground Sea">Chapter 236: Underground Sea</a>
+            <i>2 day ago </i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_34382" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ew923270" title="The Sunshine Powerhouse">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/28/x/21-1592299429.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Sunshine Powerhouse" />
+            <em class="item-rate">4.3</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_34382" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/ew923270" title="The Sunshine Powerhouse">The Sunshine Powerhouse</a>
+            </h3>
+            <span class="text-nowrap item-author" title=" Seung woo (승우) Author"> Seung woo (승우)</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ew923270/chapter_7" title="The Sunshine Powerhouse Chapter 7">Chapter 7</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ew923270/chapter_6" title="The Sunshine Powerhouse Chapter 6">Chapter 6</a>
+            <i>Dec 19,2020</i>
+            </p>
+             <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ew923270/chapter_5" title="The Sunshine Powerhouse Chapter 5">Chapter 5</a>
+            <i>Dec 12,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_34663" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/qn923551" title="Perfect Adaptation">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/40/f/21-1596032433.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Perfect Adaptation" />
+            <em class="item-rate">4.4</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_34663" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/qn923551" title="Perfect Adaptation">Perfect Adaptation</a>
+            </h3>
+            <span class="text-nowrap item-author" title="salra,SEJA Author">salra,SEJA</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qn923551/chapter_3" title="Perfect Adaptation Chapter 3">Chapter 3</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qn923551/chapter_2" title="Perfect Adaptation Chapter 2">Chapter 2</a>
+            <i>Oct 07,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qn923551/chapter_1" title="Perfect Adaptation Chapter 1">Chapter 1</a>
+            <i>Jul 29,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_27737" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/level_1_with_srank_drop_rate_is_the_strongest" title="Level 1 with S-rank Drop Rate is the Strongest">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/28/p/16-1583494495.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Level 1 with S-rank Drop Rate is the Strongest" />
+            <em class="item-hot"></em> <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_27737" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/level_1_with_srank_drop_rate_is_the_strongest" title="Level 1 with S-rank Drop Rate is the Strongest">Level 1 With S-Rank Drop Rate Is The Strongest</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Nazuna Miki Author">Nazuna Miki</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/level_1_with_srank_drop_rate_is_the_strongest/chapter_21.1" title="Level 1 with S-rank Drop Rate is the Strongest Vol.4 Chapter 21.1">Vol.4 Chapter 21.1</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/level_1_with_srank_drop_rate_is_the_strongest/chapter_20.2" title="Level 1 with S-rank Drop Rate is the Strongest Vol.4 Chapter 20.2">Vol.4 Chapter 20.2</a>
+            <i>2 day ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/level_1_with_srank_drop_rate_is_the_strongest/chapter_20.1" title="Level 1 with S-rank Drop Rate is the Strongest Vol.4 Chapter 20.1">Vol.4 Chapter 20.1</a>
+            <i>Dec 27,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35082" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ly923970" title="Mr. Ostrich">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/6/y/22-1598891572.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Mr. Ostrich" />
+            <em class="item-rate">3.4</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_35082" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/ly923970" title="Mr. Ostrich">Mr. Ostrich</a>
+            </h3>
+            <span class="text-nowrap item-author" title="2020 Author">2020</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ly923970/chapter_5" title="Mr. Ostrich Chapter 5">Chapter 5</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ly923970/chapter_4" title="Mr. Ostrich Chapter 4">Chapter 4</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ly923970/chapter_3" title="Mr. Ostrich Chapter 3">Chapter 3</a>
+            <i>Dec 19,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_23130" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/goz22310654564" title="Neko no Otera no Chion-san">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/45/a/14-1583491311.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Neko no Otera no Chion-san" />
+            <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_23130" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/goz22310654564" title="Neko no Otera no Chion-san">Neko No Otera No Chion-San</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Ojiro Makoto Author">Ojiro Makoto</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/goz22310654564/chapter_54" title="Neko no Otera no Chion-san Vol.7 Chapter 54: Cats, Kotatsu and Chion">Vol.7 Chapter 54: Cats, Kotatsu And Chion</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/goz22310654564/chapter_53" title="Neko no Otera no Chion-san Vol.6 Chapter 53: Rain, Song and Chion">Vol.6 Chapter 53: Rain, Song And Chion</a>
+            <i>Dec 21,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/goz22310654564/chapter_52" title="Neko no Otera no Chion-san Vol.6 Chapter 52: Muddied and as-is Chion">Vol.6 Chapter 52: Muddied And As-Is Chion</a>
+            <i>Nov 08,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_29632" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ijhr296321559609648" title="The Beginning After the End">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/48/q/17-1583497020.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Beginning After the End" />
+            <em class="item-hot"></em> <em class="item-rate">4.9</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_29632" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/ijhr296321559609648" title="The Beginning After the End">The Beginning After The End</a>
+            </h3>
+            <span class="text-nowrap item-author" title="TurtleMe, Fuyuki23 Author">TurtleMe, Fuyuki23</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ijhr296321559609648/chapter_86" title="The Beginning After the End Chapter 86">Chapter 86</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ijhr296321559609648/chapter_85" title="The Beginning After the End Chapter 85: Anticipation">Chapter 85: Anticipation</a>
+            <i>Nov 28,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ijhr296321559609648/chapter_84" title="The Beginning After the End Chapter 84: A Gentlemen's Agreement">Chapter 84: A Gentlemen's Agreement</a>
+            <i>Nov 21,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_25063" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/atsumare_fushigi_kenkyubu" title="Atsumare! Fushigi Kenkyu-bu">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/25/j/15-1583492367.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Atsumare! Fushigi Kenkyu-bu" />
+            <em class="item-rate">4.8</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_25063" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/atsumare_fushigi_kenkyubu" title="Atsumare! Fushigi Kenkyu-bu">Atsumare! Fushigi Kenkyu-Bu</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Anbe Masahiro Author">Anbe Masahiro</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/atsumare_fushigi_kenkyubu/chapter_207" title="Atsumare! Fushigi Kenkyu-bu Chapter 207: The Mystery of Hanetsuki">Chapter 207: The Mystery Of Hanetsuki</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/atsumare_fushigi_kenkyubu/chapter_206" title="Atsumare! Fushigi Kenkyu-bu Chapter 206: The Mystery of Christmas Eves">Chapter 206: The Mystery Of Christmas Eves</a>
+            <i>Dec 19,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/atsumare_fushigi_kenkyubu/chapter_205" title="Atsumare! Fushigi Kenkyu-bu Chapter 205: The Mystery of Coats">Chapter 205: The Mystery Of Coats</a>
+            <i>Dec 12,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_35267" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/ym924155" title="I’ve Become the Villainous Emperor of a Novel">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/14/f/22-1600313713.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="I’ve Become the Villainous Emperor of a Novel" />
+            <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_35267" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/ym924155" title="I’ve Become the Villainous Emperor of a Novel">I’Ve Become The Villainous Emperor Of A Novel</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Updating Author">Updating</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ym924155/chapter_40" title="I’ve Become the Villainous Emperor of a Novel Chapter 40">Chapter 40</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ym924155/chapter_39" title="I’ve Become the Villainous Emperor of a Novel Chapter 39">Chapter 39</a>
+            <i>Dec 28,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/ym924155/chapter_38" title="I’ve Become the Villainous Emperor of a Novel Chapter 38">Chapter 38</a>
+            <i>Dec 17,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_31559" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/uy920447" title="Heaven Defying Sword">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/19/e/19-1583499850.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Heaven Defying Sword" />
+            <em class="item-hot"></em> <em class="item-rate">4.7</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a data-tooltip="sticky_31559" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/uy920447" title="Heaven Defying Sword">Heaven Defying Sword</a>
+            </h3>
+            <span class="text-nowrap item-author" title="FengQiDongMan Author">FengQiDongMan</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/uy920447/chapter_274" title="Heaven Defying Sword Chapter 274">Chapter 274</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/uy920447/chapter_273" title="Heaven Defying Sword Chapter 273">Chapter 273</a>
+            <i>Dec 23,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/uy920447/chapter_272" title="Heaven Defying Sword Chapter 272">Chapter 272</a>
+            <i>Dec 19,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_27875" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/haomen_qifu_de_chuntian" title="Haomen Qifu de Chuntian">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/33/s/16-1583494683.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Haomen Qifu de Chuntian" />
+            <em class="item-rate">3.9</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_27875" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/haomen_qifu_de_chuntian" title="Haomen Qifu de Chuntian">Haomen Qifu De Chuntian</a>
+            </h3>
+            <span class="text-nowrap item-author" title="You Lu Wen Hua Author">You Lu Wen Hua</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/haomen_qifu_de_chuntian/chapter_286" title="Haomen Qifu de Chuntian Chapter 286">Chapter 286</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/haomen_qifu_de_chuntian/chapter_285" title="Haomen Qifu de Chuntian Chapter 285">Chapter 285</a>
+            <i>Dec 26,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/haomen_qifu_de_chuntian/chapter_284" title="Haomen Qifu de Chuntian Chapter 284">Chapter 284</a>
+            <i>Dec 19,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_34538" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/hz923426" title="Adorable Princess">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/35/i/21-1595519204.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Adorable Princess" />
+            <em class="item-rate">4.4</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_34538" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/hz923426" title="Adorable Princess">Adorable Princess</a>
+            </h3>
+            <span class="text-nowrap item-author" title="iCiyuan Author">iCiyuan</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/hz923426/chapter_100" title="Adorable Princess Chapter 100">Chapter 100</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/hz923426/chapter_99" title="Adorable Princess Chapter 99">Chapter 99</a>
+            <i>2 day ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/hz923426/chapter_98" title="Adorable Princess Chapter 98">Chapter 98</a>
+            <i>Dec 26,2020</i>
+            </p>
+            </div>
+            </div>
+            <div class="content-homepage-item">
+            <a data-tooltip="sticky_32976" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/qh921864" title="Wendy the Florist">
+            <img class="img-loading" src="https://avt.mkklcdnv6.com/22/h/20-1583501880.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Wendy the Florist" />
+            <em class="item-rate">4.6</em> </a>
+            <div class="content-homepage-item-right">
+            <h3 class="item-title">
+            <a rel="nofollow" data-tooltip="sticky_32976" class="tooltip a-h text-nowrap" rel="nofollow" href="https://manganelo.com/manga/qh921864" title="Wendy the Florist">Wendy The Florist</a>
+            </h3>
+            <span class="text-nowrap item-author" title="Bize / Sizh Author">Bize / Sizh</span>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qh921864/chapter_43" title="Wendy the Florist Chapter 43">Chapter 43</a>
+            <i>3 hour ago </i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qh921864/chapter_42" title="Wendy the Florist Chapter 42">Chapter 42</a>
+            <i>Dec 12,2020</i>
+            </p>
+            <p class="a-h item-chapter">
+            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/qh921864/chapter_41" title="Wendy the Florist Vol.1 Chapter 41: End of Season 1">Vol.1 Chapter 41: End Of Season 1</a>
+            <i>Sep 02,2020</i>
+            </p>
+            </div>
+            </div>
+            <a href="https://manganelo.com/genre-all" class="content-homepage-more a-h"><< MORE >></a>
+            </div>
+            <div id="mystickytooltip" class="stickytooltip"></div> </div>
+            <div class="container-main-right">
+            <div class="panel-topview"> <h2 class="panel-topview-title">MOST POPULAR MANGA</h2> <div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/martial_peak" title="Martial Peak">Martial Peak - Chapter 874</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/pn918005" title="Solo Leveling">Solo Leveling - Chapter 133</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/ijhr296321559609648" title="The Beginning After the End">The Beginning After The End - Chapter 86</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/hyer5231574354229" title="Tales of Demons and Gods">Tales Of Demons And Gods - Chapter 308.1</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/apotheosis" title="Apotheosis">Apotheosis - Chapter 682</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/pd924480" title="MEMORIZE">Memorize - Chapter 37</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/vrin278571580265812" title="Versatile Mage">Versatile Mage - Chapter 625</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/the_wrong_way_to_use_healing_magic" title="The Wrong Way to use Healing Magic">The Wrong Way To Use Healing Magic - Chapter 38</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/kaifuku_jutsushi_no_yarinaoshi" title="Kaifuku Jutsushi no Yarinaoshi">Kaifuku Jutsushi No Yarinaoshi - Chapter 31.2</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/dtdc220351567737255" title="Star Martial God Technique">Star Martial God Technique - Chapter 410</a></h3> </div></div> <div class="panel-newest"> <h2 class="panel-newest-title">NEW MANGA</h2> <div class="panel-newest-content"><a data-tooltip="sticky_36137" class="tooltip" href="https://manganelo.com/manga/lt925025"> <img class="img-loading" src="https://avt.mkklcdnv6.com/50/b/22-1609515327.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Can’t Hold" /> </a><a data-tooltip="sticky_36136" class="tooltip" href="https://manganelo.com/manga/nx925024"> <img class="img-loading" src="https://avt.mkklcdnv6.com/50/a/22-1609514956.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Dance of Love" /> </a><a data-tooltip="sticky_36135" class="tooltip" href="https://manganelo.com/manga/hg925023"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/y/22-1609385216.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Tyrant’s Guardian is an Evil Witch" /> </a><a data-tooltip="sticky_36134" class="tooltip" href="https://manganelo.com/manga/fp925022"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/x/22-1609301032.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Reincarnated Snow White Doesn’t Want to Eat the Poisoned Apple" /> </a><a data-tooltip="sticky_36133" class="tooltip" href="https://manganelo.com/manga/fd925021"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/w/22-1609298667.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Masaomi-kun ni Metoraremashita" /> </a><a data-tooltip="sticky_36132" class="tooltip" href="https://manganelo.com/manga/hm925020"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/v/22-1609298268.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Anemone is in Heat" /> </a><a data-tooltip="sticky_36131" class="tooltip" href="https://manganelo.com/manga/lz925019"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/u/22-1609297546.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Love Runs From the Nose" /> </a><a data-tooltip="sticky_36130" class="tooltip" href="https://manganelo.com/manga/lh925018"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/t/22-1609260751.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Young Lady Can't Escape From Her Doting Husband ♡" /> </a><a data-tooltip="sticky_36129" class="tooltip" href="https://manganelo.com/manga/gq925017"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/s/22-1609259879.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Shinobi Kill" /> </a><a data-tooltip="sticky_36128" class="tooltip" href="https://manganelo.com/manga/in925016"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/r/22-1609259638.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Chicchai Kanojo Senpai to Dōseishimasu." /> </a></div> <a href="https://manganelo.com/genre-all?type=newest" class="panel-newest-more a-h"><< MORE >></a> </div>
+            <div class="panel-category">
+            <h2 class="pn-category-story-title">MANGA BY GENRES</h2>
+            <p class="pn-category-row pn-category-row-border">
+            <a rel="nofollow" class="ctg-select a-h text-nowrap" href="https://manganelo.com/genre-all">Latest</a>
+            <a rel="nofollow" class="a-h text-nowrap" href="https://manganelo.com/genre-all?type=newest">Newest</a>
+            <a rel="nofollow" class="a-h text-nowrap" href="https://manganelo.com/genre-all?type=topview">Top view</a>
+            </p>
+            <p class="pn-category-row pn-category-row-border">
+            <a rel="nofollow" class="ctg-select a-h text-nowrap" href="https://manganelo.com/genre-all">ALL</a>
+            <a rel="nofollow" class="a-h text-nowrap" href="https://manganelo.com/genre-all?state=completed">Completed</a>
+            <a rel="nofollow" class="a-h text-nowrap" href="https://manganelo.com/genre-all?state=ongoing">Ongoing</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="ctg-select a-h text-nowrap" href="https://manganelo.com/genre-all">ALL</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-2" title="Action Manga">Action</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-3" title="Adult Manga">Adult</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-4" title="Adventure Manga">Adventure</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-6" title="Comedy Manga">Comedy</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-7" title="Cooking Manga">Cooking</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-9" title="Doujinshi Manga">Doujinshi</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-10" title="Drama Manga">Drama</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-11" title="Ecchi Manga">Ecchi</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-12" title="Fantasy Manga">Fantasy</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-13" title="Gender bender Manga">Gender bender</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-14" title="Harem Manga">Harem</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-15" title="Historical Manga">Historical</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-16" title="Horror Manga">Horror</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-45" title="Isekai Manga">Isekai</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-17" title="Josei Manga">Josei</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-44" title="Manhua Manga">Manhua</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-43" title="Manhwa Manga">Manhwa</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-19" title="Martial arts Manga">Martial arts</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-20" title="Mature Manga">Mature</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-21" title="Mecha Manga">Mecha</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-22" title="Medical Manga">Medical</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-24" title="Mystery Manga">Mystery</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-25" title="One shot Manga">One shot</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-26" title="Psychological Manga">Psychological</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-27" title="Romance Manga">Romance</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-28" title="School life Manga">School life</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-29" title="Sci fi Manga">Sci fi</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-30" title="Seinen Manga">Seinen</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-31" title="Shoujo Manga">Shoujo</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-32" title="Shoujo ai Manga">Shoujo ai</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-33" title="Shounen Manga">Shounen</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-34" title="Shounen ai Manga">Shounen ai</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-35" title="Slice of life Manga">Slice of life</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-36" title="Smut Manga">Smut</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-37" title="Sports Manga">Sports</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-38" title="Supernatural Manga">Supernatural</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-39" title="Tragedy Manga">Tragedy</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-40" title="Webtoons Manga">Webtoons</a>
+            </p>
+            <p class="pn-category-row">
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-41" title="Yaoi Manga">Yaoi</a>
+            <a class="a-h text-nowrap" href="https://manganelo.com/genre-42" title="Yuri Manga">Yuri</a>
+            </p>
+            </div>
+            <div style="clear: both"></div>
+            </div>
+            </div>
+
+</body>
+</html>

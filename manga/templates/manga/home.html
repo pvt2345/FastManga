@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Manga</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+    <link rel="stylesheet" href="{% static 'css/c-style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/tooltip.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/c-style-search.css' %}" />
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700,700italic&subset=latin,vietnamese' rel='stylesheet' />
+    <script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/tooltip.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/fsearch.js' %}"></script>
+    <!-- <link rel="stylesheet" href="https://manganelo.com/themes/starrate/css/style.css" />
+    <script type="text/javascript" src="https://manganelo.com/themes/starrate/js/starwarsjs.js"></script> -->
+</head>
+<body>
+    <div class="body-site">
+        <div class="container container-header">
+            <div class="logo">
+                <a href="/" title="Manga Online">
+                    <img src="{% static 'img/logo_small.png' %}" alt="Manga Online" title="Manga Online">
+                </a>
+            </div>
+            <div class="container-header-top">
+                <div class="box-search">
+                    <form name="frmsearch">
+                        <input id="search-story" autocomplete="off" placeholder="Tìm kiếm" class="search-story searchi">
+                            <div id="SearchResult">
+                                <ul></ul>
+                                    <div id="search-footer" class="searchf">
+                                </div>
+                            </div>
+                        <input style="display: none;">
+                    </form>
+                </div>
+                <div class="box-user-options">
+                    <a rel="nofollow" href="{% url 'manga:login' %}" class="user-login">Đăng nhập</a>
+                    <a rel="nofollow" href="{% url 'manga:register' %}" class="user-register">Đăng ký</a>
+                    <!-- <i class="mode-changer"></i> -->
+                </div>
+            </div>
+            <a class="header-mobile-menu">MENU</a>
+            <div class="header-menu">
+                <a class="a-h" href="{% url 'manga:home' %}" title="Manga Online">MANGA ONLINE</a>
+                <a class="a-h" href="{% url 'manga:all_manga' %}" title="LATEST MANGA">LATEST MANGA</a>
+                <a class="a-h" href="{% url 'manga:all_manga' %}" title="HOT MANGA">HOT MANGA</a>
+                <a class="a-h" href="{% url 'manga:all_manga' %}" title="NEWEST MANGA">NEWEST MANGA</a>
+            </div>
+        </div>
+        
+        <!-- <div class="container container-silder"> 
+            <h2 class="silder-title">TOP WEEK</h2>
+            <div id="owl-slider" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
+                <div class="owl-wrapper-outer">
+                    <div class="owl-wrapper" style="width: 7900px; left: 0px; display: block; transition: all 800ms ease 0s; transform: translate3d(-158px, 0px, 0px);">  
+                        <div class="owl-item" style="width: 158px;">
+                            <div class="item"> 
+                                <img class="img-loading" src="https://avt.mkklcdnv6.com/19/v/1-1583464475.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Tales of Demons and Gods"> 
+                                <div class="slide-caption"><h3><a rel="nofollow" class="text-nowrap a-h" href="https://manganelo.com/manga/hyer5231574354229" title="Tales of Demons and Gods">Tales Of Demons And Gods</a></h3>
+                                    <a rel="nofollow" class="text-nowrap a-h" href="https://manganelo.com/chapter/hyer5231574354229/chapter_308.1" title="Tales of Demons and Gods Chapter 308.1">Chapter 308.1</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div> 
+                <div class="owl-controls clickable">
+                    <div class="owl-buttons">
+                        <div class="owl-prev"></div>
+                    </div>
+                    <div class="owl-buttons-right">
+                        <div class="owl-next"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div> -->
+
+        
+        <div class="container container-main">
+            <div class="container-main-left">
+            <script type="text/javascript">
+                    $(document).ready(function() {
+                        tooltip();
+                        $.getJSON('https://manganelo.com/' + 'home_tooltips_json', function(manga) {
+                            var id = "";
+                            var str_id_isset = ",";
+                            $('a.tooltip').hover(function(e) {
+                                if (!$(this).hasClass('hastool')) {
+                                    id = $(this).attr('data-tooltip');
+                                    $.each(manga, function(key, val) {
+                                        if ("sticky_"+val.id == id && str_id_isset.indexOf(","+val.id+",") == -1) {
+                                            str_id_isset += val.id + ",";
+                                            $tt_no = '';
+                                            if(val.nameother.trim() != '') 
+                                                $tt_no = '<p><label>Alternative:</label>' + val.nameother + '</p>';
+                                            $tt_au = '';
+                                            if(val.author.trim() != '') 
+                                                $tt_au = '<p><label>Author(s):</label>' + val.author + '</p>';
+                                            $tooltip_add = '<div id="'+ id +'" class="atip"> <div id="tooltip"> <h3>' + val.name + '</h3> <div class="tooltip_main"> <div class="tooltip_detail"> <img class="img-loading" src="' + val.image + '" /> <div class="tooltip_detail_left">'+ $tt_no + $tt_au + '<p> <label>Update:</label>' + val.updatetime + '</p> <p> <label>View:</label>' + val.view + '</p> <p> <label>Genres:</label>' + val.genres + '</p> </div> </div> <div class="tooltip_summary"> <span>Summary : </span>' + val.description + '</div> </div> </div> </div>';
+                                            $('#mystickytooltip').append($tooltip_add);
+                                            return false;
+                                        }
+                                    });
+                                    $(this).addClass('hastool');
+                                }
+                                $(this).attr("title", "");
+                            }, function() {});
+                        });
+                    });
+                </script>
+                <div class="panel-content-homepage">
+                <h1 class="content-homepage-title">READ MANGA ONLINE - LATEST UPDATES</h1>
+                {% for ch in '1111111111111111111111111' %}
+                <div class="content-homepage-item">
+                    <a data-tooltip="sticky_26021" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/zero_point_idol" title="Zero Point Idol">
+                        <img class="img-loading" src="https://avt.mkklcdnv6.com/42/d/15-1583493177.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Zero Point Idol" />
+                            <em class="item-hot"></em>
+                            <!-- <em class="item-ss"></em> -->
+                            <em class="item-rate">4.2</em> 
+                        </a>
+                    <div class="content-homepage-item-right">
+                        <h3 class="item-title">
+                            <a data-tooltip="sticky_26021" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/zero_point_idol" title="Zero Point Idol">Zero Point Idol</a>
+                        </h3>
+                        <span class="text-nowrap item-author" title="Sanjing Jun Author">Sanjing Jun</span>
+                        <p class="a-h item-chapter">
+                            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_123" title="Zero Point Idol Chapter 123: Worry">Chapter 123: Worry</a>
+                            <i>38 mins ago </i>
+                        </p>
+                        <p class="a-h item-chapter">
+                            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_122" title="Zero Point Idol Chapter 122: The competition begins!">Chapter 122: The Competition Begins!</a>
+                            <i>Dec 28,2020</i>
+                        </p>
+                        <p class="a-h item-chapter">
+                            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_121" title="Zero Point Idol Chapter 121: Who am I to you?">Chapter 121: Who Am I To You?</a>
+                            <i>Dec 17,2020</i>
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+                <a href="https://manganelo.com/genre-all" class="content-homepage-more a-h"><< MORE >></a>
+                </div>
+            </div>
+            <div class="container-main-right">
+                <div class="panel-topview"> <h2 class="panel-topview-title">MOST POPULAR MANGA</h2> <div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/martial_peak" title="Martial Peak">Martial Peak - Chapter 874</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/pn918005" title="Solo Leveling">Solo Leveling - Chapter 133</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/ijhr296321559609648" title="The Beginning After the End">The Beginning After The End - Chapter 86</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/hyer5231574354229" title="Tales of Demons and Gods">Tales Of Demons And Gods - Chapter 308.1</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/apotheosis" title="Apotheosis">Apotheosis - Chapter 682</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/pd924480" title="MEMORIZE">Memorize - Chapter 37</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/vrin278571580265812" title="Versatile Mage">Versatile Mage - Chapter 625</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/the_wrong_way_to_use_healing_magic" title="The Wrong Way to use Healing Magic">The Wrong Way To Use Healing Magic - Chapter 38</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/kaifuku_jutsushi_no_yarinaoshi" title="Kaifuku Jutsushi no Yarinaoshi">Kaifuku Jutsushi No Yarinaoshi - Chapter 31.2</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/dtdc220351567737255" title="Star Martial God Technique">Star Martial God Technique - Chapter 410</a></h3> </div></div> <div class="panel-newest"> <h2 class="panel-newest-title">NEW MANGA</h2> <div class="panel-newest-content"><a data-tooltip="sticky_36137" class="tooltip" href="https://manganelo.com/manga/lt925025"> <img class="img-loading" src="https://avt.mkklcdnv6.com/50/b/22-1609515327.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Can’t Hold" /> </a><a data-tooltip="sticky_36136" class="tooltip" href="https://manganelo.com/manga/nx925024"> <img class="img-loading" src="https://avt.mkklcdnv6.com/50/a/22-1609514956.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Dance of Love" /> </a><a data-tooltip="sticky_36135" class="tooltip" href="https://manganelo.com/manga/hg925023"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/y/22-1609385216.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Tyrant’s Guardian is an Evil Witch" /> </a><a data-tooltip="sticky_36134" class="tooltip" href="https://manganelo.com/manga/fp925022"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/x/22-1609301032.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Reincarnated Snow White Doesn’t Want to Eat the Poisoned Apple" /> </a><a data-tooltip="sticky_36133" class="tooltip" href="https://manganelo.com/manga/fd925021"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/w/22-1609298667.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Masaomi-kun ni Metoraremashita" /> </a><a data-tooltip="sticky_36132" class="tooltip" href="https://manganelo.com/manga/hm925020"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/v/22-1609298268.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Anemone is in Heat" /> </a><a data-tooltip="sticky_36131" class="tooltip" href="https://manganelo.com/manga/lz925019"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/u/22-1609297546.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Love Runs From the Nose" /> </a><a data-tooltip="sticky_36130" class="tooltip" href="https://manganelo.com/manga/lh925018"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/t/22-1609260751.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Young Lady Can't Escape From Her Doting Husband ♡" /> </a><a data-tooltip="sticky_36129" class="tooltip" href="https://manganelo.com/manga/gq925017"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/s/22-1609259879.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Shinobi Kill" /> </a><a data-tooltip="sticky_36128" class="tooltip" href="https://manganelo.com/manga/in925016"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/r/22-1609259638.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Chicchai Kanojo Senpai to Dōseishimasu." /> </a></div> <a href="https://manganelo.com/genre-all?type=newest" class="panel-newest-more a-h"><< MORE >></a> </div>
+                    <div class="panel-category">
+                        <h2 class="pn-category-story-title">MANGA BY GENRES</h2>
+                        <p class="pn-category-row pn-category-row-border">
+                            <a rel="nofollow" class="ctg-select a-h text-nowrap" href="https://manganelo.com/genre-all">Latest</a>
+                            <a rel="nofollow" class="a-h text-nowrap" href="https://manganelo.com/genre-all?type=newest">Newest</a>
+                            <a rel="nofollow" class="a-h text-nowrap" href="https://manganelo.com/genre-all?type=topview">Top view</a>
+                        </p>
+                        <p class="pn-category-row pn-category-row-border">
+                            <a rel="nofollow" class="ctg-select a-h text-nowrap" href="https://manganelo.com/genre-all">ALL</a>
+                            <a rel="nofollow" class="a-h text-nowrap" href="https://manganelo.com/genre-all?state=completed">Completed</a>
+                            <a rel="nofollow" class="a-h text-nowrap" href="https://manganelo.com/genre-all?state=ongoing">Ongoing</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="ctg-select a-h text-nowrap" href="https://manganelo.com/genre-all">ALL</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-2" title="Action Manga">Action</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-3" title="Adult Manga">Adult</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-4" title="Adventure Manga">Adventure</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-6" title="Comedy Manga">Comedy</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-7" title="Cooking Manga">Cooking</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-9" title="Doujinshi Manga">Doujinshi</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-10" title="Drama Manga">Drama</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-11" title="Ecchi Manga">Ecchi</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-12" title="Fantasy Manga">Fantasy</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-13" title="Gender bender Manga">Gender bender</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-14" title="Harem Manga">Harem</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-15" title="Historical Manga">Historical</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-16" title="Horror Manga">Horror</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-45" title="Isekai Manga">Isekai</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-17" title="Josei Manga">Josei</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-44" title="Manhua Manga">Manhua</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-43" title="Manhwa Manga">Manhwa</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-19" title="Martial arts Manga">Martial arts</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-20" title="Mature Manga">Mature</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-21" title="Mecha Manga">Mecha</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-22" title="Medical Manga">Medical</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-24" title="Mystery Manga">Mystery</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-25" title="One shot Manga">One shot</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-26" title="Psychological Manga">Psychological</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-27" title="Romance Manga">Romance</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-28" title="School life Manga">School life</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-29" title="Sci fi Manga">Sci fi</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-30" title="Seinen Manga">Seinen</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-31" title="Shoujo Manga">Shoujo</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-32" title="Shoujo ai Manga">Shoujo ai</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-33" title="Shounen Manga">Shounen</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-34" title="Shounen ai Manga">Shounen ai</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-35" title="Slice of life Manga">Slice of life</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-36" title="Smut Manga">Smut</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-37" title="Sports Manga">Sports</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-38" title="Supernatural Manga">Supernatural</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-39" title="Tragedy Manga">Tragedy</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-40" title="Webtoons Manga">Webtoons</a>
+                        </p>
+                        <p class="pn-category-row">
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-41" title="Yaoi Manga">Yaoi</a>
+                            <a class="a-h text-nowrap" href="https://manganelo.com/genre-42" title="Yuri Manga">Yuri</a>
+                        </p>
+                    </div>
+                <div style="clear: both"></div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
