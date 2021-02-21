@@ -1,0 +1,4 @@
+.vscode/*
+FastManga/__pycache__/
+manga/__pycache__/
+manga/migrations/__pycache__/
