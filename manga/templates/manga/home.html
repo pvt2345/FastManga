@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Manga</title>
+    <title>FaManga - Đọc truyện tranh online</title>
     {% load static %}
     <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
     <link rel="stylesheet" href="{% static 'css/c-style.css' %}" />
@@ -118,39 +118,55 @@
                 </script>
                 <div class="panel-content-homepage">
                 <h1 class="content-homepage-title">READ MANGA ONLINE - LATEST UPDATES</h1>
-                {% for ch in '1111111111111111111111111' %}
+                {% for item in mangas %}
                 <div class="content-homepage-item">
-                    <a data-tooltip="sticky_26021" class="tooltip item-img" rel="nofollow" href="https://manganelo.com/manga/zero_point_idol" title="Zero Point Idol">
-                        <img class="img-loading" src="https://avt.mkklcdnv6.com/42/d/15-1583493177.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Zero Point Idol" />
+                    <a data-tooltip="sticky_26021" class="tooltip item-img" rel="nofollow" href="{% url 'manga:manga' item.main.code %}" title="{{ item.main.name }}">
+                        <img class="img-loading" src="{{ item.main.thumbnail_url }}" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="{{ item.main.name }}" />
                             <em class="item-hot"></em>
                             <!-- <em class="item-ss"></em> -->
                             <em class="item-rate">4.2</em> 
                         </a>
                     <div class="content-homepage-item-right">
                         <h3 class="item-title">
-                            <a data-tooltip="sticky_26021" class="tooltip a-h text-nowrap" href="https://manganelo.com/manga/zero_point_idol" title="Zero Point Idol">Zero Point Idol</a>
+                            <a data-tooltip="sticky_26021" class="tooltip a-h text-nowrap" href="{% url 'manga:manga' item.main.code %}" title="{{item.main.name}}">{{item.main.name}}</a>
                         </h3>
-                        <span class="text-nowrap item-author" title="Sanjing Jun Author">Sanjing Jun</span>
+                        <span class="text-nowrap item-author" 
+                            title=" {% for author in item.main.author.all %}
+                                        {{author.name}}, 
+                                    {% endfor %}">
+                            {% for author in item.main.author.all %}
+                                {{author.name}}
+                            {% endfor %}
+                        </span>
+                        {% for chapter in item.top3_recent_chap_list %}
                         <p class="a-h item-chapter">
-                            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_123" title="Zero Point Idol Chapter 123: Worry">Chapter 123: Worry</a>
-                            <i>38 mins ago </i>
+                            <a rel="nofollow" class="text-nowrap" href="#" title="Zero Point Idol Chapter 123: Worry">{{ chapter.main.name }}</a>
+                            <i>{{chapter.time_text}}</i>
                         </p>
-                        <p class="a-h item-chapter">
-                            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_122" title="Zero Point Idol Chapter 122: The competition begins!">Chapter 122: The Competition Begins!</a>
-                            <i>Dec 28,2020</i>
-                        </p>
-                        <p class="a-h item-chapter">
-                            <a rel="nofollow" class="text-nowrap" href="https://manganelo.com/chapter/zero_point_idol/chapter_121" title="Zero Point Idol Chapter 121: Who am I to you?">Chapter 121: Who Am I To You?</a>
-                            <i>Dec 17,2020</i>
-                        </p>
+                        {% endfor %}
                     </div>
                 </div>
                 {% endfor %}
-                <a href="https://manganelo.com/genre-all" class="content-homepage-more a-h"><< MORE >></a>
+                <a href="{% url 'manga:all_manga' %}" class="content-homepage-more a-h"><< MORE >></a>
                 </div>
             </div>
             <div class="container-main-right">
-                <div class="panel-topview"> <h2 class="panel-topview-title">MOST POPULAR MANGA</h2> <div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/martial_peak" title="Martial Peak">Martial Peak - Chapter 874</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/pn918005" title="Solo Leveling">Solo Leveling - Chapter 133</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/ijhr296321559609648" title="The Beginning After the End">The Beginning After The End - Chapter 86</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/hyer5231574354229" title="Tales of Demons and Gods">Tales Of Demons And Gods - Chapter 308.1</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/apotheosis" title="Apotheosis">Apotheosis - Chapter 682</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/pd924480" title="MEMORIZE">Memorize - Chapter 37</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/vrin278571580265812" title="Versatile Mage">Versatile Mage - Chapter 625</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/the_wrong_way_to_use_healing_magic" title="The Wrong Way to use Healing Magic">The Wrong Way To Use Healing Magic - Chapter 38</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/kaifuku_jutsushi_no_yarinaoshi" title="Kaifuku Jutsushi no Yarinaoshi">Kaifuku Jutsushi No Yarinaoshi - Chapter 31.2</a></h3> </div><div class="panel-topview-item"> <h3><a class="text-nowrap" rel="nofollow" href="https://manganelo.com/manga/dtdc220351567737255" title="Star Martial God Technique">Star Martial God Technique - Chapter 410</a></h3> </div></div> <div class="panel-newest"> <h2 class="panel-newest-title">NEW MANGA</h2> <div class="panel-newest-content"><a data-tooltip="sticky_36137" class="tooltip" href="https://manganelo.com/manga/lt925025"> <img class="img-loading" src="https://avt.mkklcdnv6.com/50/b/22-1609515327.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Can’t Hold" /> </a><a data-tooltip="sticky_36136" class="tooltip" href="https://manganelo.com/manga/nx925024"> <img class="img-loading" src="https://avt.mkklcdnv6.com/50/a/22-1609514956.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Dance of Love" /> </a><a data-tooltip="sticky_36135" class="tooltip" href="https://manganelo.com/manga/hg925023"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/y/22-1609385216.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Tyrant’s Guardian is an Evil Witch" /> </a><a data-tooltip="sticky_36134" class="tooltip" href="https://manganelo.com/manga/fp925022"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/x/22-1609301032.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Reincarnated Snow White Doesn’t Want to Eat the Poisoned Apple" /> </a><a data-tooltip="sticky_36133" class="tooltip" href="https://manganelo.com/manga/fd925021"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/w/22-1609298667.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Masaomi-kun ni Metoraremashita" /> </a><a data-tooltip="sticky_36132" class="tooltip" href="https://manganelo.com/manga/hm925020"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/v/22-1609298268.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Anemone is in Heat" /> </a><a data-tooltip="sticky_36131" class="tooltip" href="https://manganelo.com/manga/lz925019"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/u/22-1609297546.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Love Runs From the Nose" /> </a><a data-tooltip="sticky_36130" class="tooltip" href="https://manganelo.com/manga/lh925018"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/t/22-1609260751.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="The Young Lady Can't Escape From Her Doting Husband ♡" /> </a><a data-tooltip="sticky_36129" class="tooltip" href="https://manganelo.com/manga/gq925017"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/s/22-1609259879.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Shinobi Kill" /> </a><a data-tooltip="sticky_36128" class="tooltip" href="https://manganelo.com/manga/in925016"> <img class="img-loading" src="https://avt.mkklcdnv6.com/49/r/22-1609259638.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Chicchai Kanojo Senpai to Dōseishimasu." /> </a></div> <a href="https://manganelo.com/genre-all?type=newest" class="panel-newest-more a-h"><< MORE >></a> </div>
+                <div class="panel-topview"> 
+                    <h2 class="panel-topview-title">MOST POPULAR MANGA</h2> 
+                    {% for item in top_10_popular_mangas %}
+                    <div class="panel-topview-item"> 
+                        <h3><a class="text-nowrap" rel="nofollow" href="{url 'manga:manga' item.main.code %}" title="{{item.main.name}}">{{item.main.name}} - {{item.most_recent_chapter_name}}</a></h3> 
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="panel-newest"> 
+                    <h2 class="panel-newest-title">NEW MANGA</h2> 
+                    <div class="panel-newest-content">
+                        <a data-tooltip="sticky_36137" class="tooltip" href="https://manganelo.com/manga/lt925025"> 
+                            <img class="img-loading" src="https://avt.mkklcdnv6.com/50/b/22-1609515327.jpg" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';" alt="Can’t Hold" /> 
+                        </a>
+                    </div> 
+                    <a href="{% url 'manga:all_manga' %}" class="panel-newest-more a-h"><< MORE >></a> </div>
                     <div class="panel-category">
                         <h2 class="pn-category-story-title">MANGA BY GENRES</h2>
                         <p class="pn-category-row pn-category-row-border">

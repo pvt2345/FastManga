@@ -145,7 +145,7 @@ input:focus, select:focus {
 .container-header-top .box-user-options .user-notification{
     float: left;
     position: relative;
-    background: url(../images/user.png) 0 0 no-repeat;
+    background: url(../img/user.png) 0 0 no-repeat;
     height: 35px;
     width: 35px;
     margin-left: 10px;
@@ -170,7 +170,7 @@ input:focus, select:focus {
 
 .container-header-top .box-user-options .user-history {
     float: left;
-    background: url(../images/user.png) 0 -40px no-repeat;
+    background: url(../img/user.png) 0 -40px no-repeat;
     height: 35px;
     width: 35px;
     margin-left: 10px;
@@ -178,7 +178,7 @@ input:focus, select:focus {
 
 .container-header-top .box-user-options .user-logout {
     float: left;
-    background: url(../images/user.png) 0 -78px no-repeat;
+    background: url(../img/user.png) 0 -78px no-repeat;
     height: 35px;
     width: 35px;
     margin-left: 10px;
@@ -220,6 +220,10 @@ input:focus, select:focus {
 
 .container-header-top .box-user-options .user-register:hover {
     background-position-x: 90px;
+}
+
+.container-header-top .box-user-options .user-login:hover {
+    background-position-x: 110px;
 }
 
 .container-header-top .box-user-options .user-login {
@@ -800,7 +804,7 @@ input:focus, select:focus {
     width: 22px;
     height: 22px;
     display: block;
-    background-image: url(../images/flash-story.png);
+    background-image: url(../img/flash-story.png);
     background-position-x: -196px;
     background-position-y: 0px;
     background-repeat: no-repeat;
@@ -900,7 +904,7 @@ input:focus, select:focus {
 }
 
 #panel-description-linear i {
-    background: url(../images/linear_gradient.png);
+    background: url(../img/linear_gradient.png);
     position: absolute;
     left: 0;
     bottom: 0;
@@ -943,7 +947,7 @@ input:focus, select:focus {
 
 .panel-story-chapter-list .chapter-name {
     float: left;
-    background: url(../images/item-bg.png) 1px center no-repeat;
+    background: url(../img/item-bg.png) 1px center no-repeat;
     padding-left: 15px;
     margin-right: 20px;
     width: calc(100% - 205px);
@@ -1061,7 +1065,7 @@ input:focus, select:focus {
     height: 24px;
     font-size: 15px;
     color: #079eda;
-    background: url(../images/item-bg.png) 2px 8px no-repeat;
+    background: url(../img/item-bg.png) 2px 8px no-repeat;
     padding-left: 15px;
 }
 
@@ -1179,7 +1183,7 @@ input:focus, select:focus {
     float: left;
     width: 16px;
     height: 16px;
-    background-image: url(../images/delete.png);
+    background-image: url(../img/delete.png);
     background-repeat: no-repeat;
     margin-top: 2px;
     cursor: pointer;
@@ -1234,7 +1238,7 @@ input:focus, select:focus {
     margin-left: 15px;
     width: 16px;
     height: 16px;
-    background-image: url(../images/show-hide.png);
+    background-image: url(../img/show-hide.png);
     background-position-x: 0px;
     background-position-y: -31px;
     background-repeat: no-repeat;
@@ -1252,7 +1256,7 @@ input:focus, select:focus {
     margin-left: 15px;
     width: 16px;
     height: 16px;
-    background-image: url(../images/show-hide.png);
+    background-image: url(../img/show-hide.png);
     background-position-x: 0px;
     background-position-y: -3px;
     background-repeat: no-repeat;
@@ -1325,7 +1329,7 @@ input:focus, select:focus {
     float: right;
     width: 16px;
     height: 16px;
-    background-image: url(../images/delete.png);
+    background-image: url(../img/delete.png);
     background-repeat: no-repeat;
     margin-top: 2px;
     cursor: pointer;
@@ -1361,7 +1365,7 @@ input:focus, select:focus {
     margin-left: 15px;
     width: 16px;
     height: 16px;
-    background-image: url(../images/show-hide.png);
+    background-image: url(../img/show-hide.png);
     background-position-x: 0px;
     background-position-y: -31px;
     background-repeat: no-repeat;
@@ -1379,7 +1383,7 @@ input:focus, select:focus {
     margin-left: 15px;
     width: 16px;
     height: 16px;
-    background-image: url(../images/show-hide.png);
+    background-image: url(../img/show-hide.png);
     background-position-x: 0px;
     background-position-y: -3px;
     background-repeat: no-repeat;
@@ -1438,7 +1442,7 @@ input:focus, select:focus {
     float: right;
     width: 16px;
     height: 16px;
-    background-image: url(../images/delete.png);
+    background-image: url(../img/delete.png);
     background-repeat: no-repeat;
     margin-top: 2px;
     cursor: pointer;
@@ -1465,7 +1469,7 @@ input:focus, select:focus {
     margin-left: 40px;
     width: 16px;
     height: 16px;
-    background-image: url(../images/show-hide.png);
+    background-image: url(../img/show-hide.png);
     background-position-x: 0px;
     background-position-y: -3px;
     background-repeat: no-repeat;
@@ -1483,7 +1487,7 @@ input:focus, select:focus {
     margin-left: 40px;
     width: 16px;
     height: 16px;
-    background-image: url(../images/show-hide.png);
+    background-image: url(../img/show-hide.png);
     background-position-x: 0px;
     background-position-y: -31px;
     background-repeat: no-repeat;
@@ -1588,7 +1592,7 @@ input:focus, select:focus {
     margin-left: 40px;
     width: 16px;
     height: 16px;
-    background-image: url(../images/show-hide.png);
+    background-image: url(../img/show-hide.png);
     background-position-x: 0;
     background-position-y: -31px;
     background-repeat: no-repeat;
@@ -1606,7 +1610,7 @@ input:focus, select:focus {
     margin-left: 40px;
     width: 16px;
     height: 16px;
-    background-image: url(../images/show-hide.png);
+    background-image: url(../img/show-hide.png);
     background-position-x: 0;
     background-position-y: -31px;
     background-repeat: no-repeat;
@@ -1654,7 +1658,7 @@ input:focus, select:focus {
     height: 20px;
     width: 20px;
     margin-right: 5px;
-    background: url(../images/advanced-choose.png) no-repeat;
+    background: url(../img/advanced-choose.png) no-repeat;
     background-position-x: 0px;
     background-position-y: 0px;
 }
@@ -1674,7 +1678,7 @@ input:focus, select:focus {
     height: 20px;
     width: 20px;
     margin-right: 5px;
-    background: url(../images/advanced-choose.png) no-repeat;
+    background: url(../img/advanced-choose.png) no-repeat;
     background-position-x: -20px;
     background-position-y: -20px;
 }
@@ -1685,7 +1689,7 @@ input:focus, select:focus {
     height: 20px;
     width: 20px;
     margin-right: 5px;
-    background: url(../images/advanced-choose.png) no-repeat;
+    background: url(../img/advanced-choose.png) no-repeat;
     background-position-x: -42px;
     background-position-y: -41px;
 }
@@ -1704,7 +1708,7 @@ input:focus, select:focus {
     display: block;
     height: 20px;
     width: 20px;
-    background: url(../images/advanced-choose.png) no-repeat;
+    background: url(../img/advanced-choose.png) no-repeat;
     background-position-x: -63px;
     background-position-y: -62px;
 }

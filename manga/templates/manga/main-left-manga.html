@@ -1,0 +1,148 @@
+<div class="container-main-left">
+    <div style="width: 100%;overflow: hidden;text-align: center;float: left;">
+    <div style="max-width: 728px;max-height: 90px;overflow: hidden;margin: 0px auto;">
+    <iframe src="/ads/adtrue_728x90_desktop.html" scrolling="no" frameborder="0" style="width: 728px;height: 90px;"></iframe>
+    </div>
+    </div>
+    <script type="application/javascript">
+        $votepointstar = '4';
+        $defaultpointrating = '4.26';
+        $postid = '26021';
+        $ddrate = 'https://manganelo.com/story_vote';
+        $ddbookmark = 'https://manganelo.com/setbookmark';
+        $lg = false;
+    </script>
+    <script>
+        isfollowed = false;
+        jQuery(document).ready(function($) {
+            $(".story-bookmark").click(function() {
+                if($lg == false) {
+                    show_notication_popup('You need to log in to use this function.');
+                    return;
+                }
+            });
+        });
+    </script>
+    <div class="panel-breadcrumb">
+    <a class="a-h" href="{% url 'manga:home' %}" title="Read Manga Online">Read Manga Online</a>
+    <span>»</span>
+    <a class="a-h" href="{% url 'manga:manga' manga.code %}" title="{{ manga.name }}">
+    {{ manga.name }} </a>
+    </div>
+    <div class="panel-story-info">
+    <div class="story-info-left">
+    <span class="info-image">
+    <img class="img-loading" src="{{ manga.thumbnail_url }}" alt="{{ manga.name }}" title="{{ manga.name }}" onerror="javascript:this.src='https://manganelo.com/themes/hm/images/404_not_found.png';">
+    </span>
+    <span class="style-btn btn-chapterlist">READ CHAPTER LIST</span>
+    </div>
+    <div class="story-info-right">
+    <h1>{{ manga.name }}</h1>
+    <table class="variations-tableInfo">
+    <tbody>
+    <tr>
+    <td class="table-label"><i class="info-author"></i>Tác giả :</td>
+        <td class="table-value">
+            <a rel="nofollow" class="a-h" href="#">{{first_author.name}}</a> 
+            {% if remain_authors %}
+                {% for item in remain_authors %}
+                - <a rel="nofollow" class="a-h" href="#">{{ item.name }}</a> 
+                {% endfor %}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+    <td class="table-label"><i class="info-status"></i>Trạng thái :</td>                
+    <td class="table-value">
+    {% if manga.ongoing %}
+        Còn tiếp
+    {% else %}
+        Đủ bộ
+    {% endif %}
+    </td>
+    </tr>
+    <tr>
+    <td class="table-label"><i class="info-genres"></i>Thể loại :</td>
+    <td class="table-value">
+    <a class="a-h" href="#">{{ first_genre.name }}</a> 
+    {% if remain_genres %}
+        {% for item in remain_genres %}
+            - <a rel="nofollow" class="a-h" href="#">{{ item.name }}</a> 
+        {% endfor %}
+    {% endif %}
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    <div class="story-info-right-extent">
+    <p><span class="stre-label"><i class="info-time"></i>Cập nhật mới nhất :</span><span class="stre-value">Jan 02,2021 - 10:50 AM</span></p>
+    <p><span class="stre-label"><i class="info-view"></i>Lượt xem :</span><span class="stre-value">2,725,024</span></p>
+    <p>
+    <span class="stre-label"><i class="info-rate"></i>Đánh giá :</span>
+    <span class="stre-value">
+    <em class="rate_row" id="rate_row">
+        <span class="rate_star checked" data-value="1"></span>
+        <span class="rate_star checked" data-value="2"></span>
+        <span class="rate_star checked" data-value="3"></span>
+        <span class="rate_star checked" data-value="4"></span>
+        <span class="rate_star" data-value="5"></span>
+        <input type="hidden" class="get_rate" value="4" default-stars="4"></em>
+    <em class="rate_row_result"></em>
+    </span>
+    </p>
+    <p>
+    <em id="rate_row_cmd">
+    <em xmlns:v="http://rdf.data-vocabulary.org/#" typeof="v:Review-aggregate">
+    <em property="v:itemreviewed">MangaNelo.com</em>
+    <em rel="v:rating">
+    <em typeof="v:Rating">rate :
+    <em property="v:average">4.26</em>/
+    <em property="v:best">5</em>
+    </em>
+    </em> - <em property="v:votes">285</em> votes
+    </em>
+    </em>
+    </p>
+    <!-- <p class="info-bookmark">
+    <img class="story-bookmark" src="https://manganelo.com/themes/hm/images/bookmark.png">
+    </p>
+    <p class="noti-bookmark"></p>
+    <p class="fb-save fb_iframe_widget" data-uri="https://manganelo.com/manga/zero_point_idol" data-size="small" id="savefilmfb" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=190712595201460&amp;container_width=606&amp;locale=en_US&amp;sdk=joey&amp;size=small&amp;uri=https%3A%2F%2Fmanganelo.com%2Fmanga%2Fzero_point_idol"><span style="vertical-align: bottom; width: 132px; height: 20px;"><iframe name="f2f6e826eabdcbc" width="1000px" height="1000px" data-testid="fb:save Facebook Social Plugin" title="fb:save Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/plugins/save.php?app_id=190712595201460&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dfc420073b5c8a%26domain%3Dmanganelo.com%26origin%3Dhttps%253A%252F%252Fmanganelo.com%252Ff21e19eb79c0d44%26relation%3Dparent.parent&amp;container_width=606&amp;locale=en_US&amp;sdk=joey&amp;size=small&amp;uri=https%3A%2F%2Fmanganelo.com%2Fmanga%2Fzero_point_idol" style="border: none; visibility: visible; width: 132px; height: 20px;" class=""></iframe></span></p>
+    <div class="fb-like fb_iframe_widget" data-href="https://manganelo.com/manga/zero_point_idol" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=190712595201460&amp;container_width=606&amp;href=https%3A%2F%2Fmanganelo.com%2Fmanga%2Fzero_point_idol&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=false"><span style="vertical-align: bottom; width: 150px; height: 28px;"><iframe name="ff3271e659c8c4" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/plugins/like.php?action=like&amp;app_id=190712595201460&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df137009e0b934c%26domain%3Dmanganelo.com%26origin%3Dhttps%253A%252F%252Fmanganelo.com%252Ff21e19eb79c0d44%26relation%3Dparent.parent&amp;container_width=606&amp;href=https%3A%2F%2Fmanganelo.com%2Fmanga%2Fzero_point_idol&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=false" style="border: none; visibility: visible; width: 150px; height: 28px;" class=""></iframe></span></div> -->
+    </div>
+    </div>
+    <div class="panel-story-info-description" id="panel-story-info-description" style="max-height: none;">
+        <h3>Description :</h3>
+        {{manga.description}} 
+    </div>
+    <div id="panel-description-linear">
+    <i id="pn-description-linear-gradient" style="display: none;"></i>
+    </div>
+    <span style="display: none;" id="panel-story-info-description-show-more" class="a-h">SHOW MORE ⇩</span>
+    <span style="display: initial;" id="panel-story-info-description-show-less" class="a-h">SHOW LESS ⇧</span>
+    </div>
+    <script>
+        link_chapter_null = 'https://manganelo.com/chapter/zero_point_idol/chapter_';
+    </script>
+    <div class="panel-story-chapter-list">
+    <p class="row-title-chapter" style="width: calc(100% - 19px);">
+    <span class="row-title-chapter-name">Chapter name</span>
+    <span class="row-title-chapter-view">View</span>
+    <span class="row-title-chapter-time">Uploaded</span>
+    </p>
+    <ul class="row-content-chapter">
+    {% for chapter in chapters %}
+        <li class="a-h">
+        <a rel="nofollow" class="chapter-name text-nowrap" href="#" title="{{ manga.name }} {{chapter.main.name}}">{{ chapter.main.name }}</a>
+        <span class="chapter-view text-nowrap">{{chapter.main.views}}</span>
+        <span class="chapter-time text-nowrap" title="Jan 02,2021 10:01">{{chapter.updated_text}}</span>
+        </li>               
+    {% endfor %}
+    </ul>
+    </div>
+    <!-- <div class="panel-story-comment panel-fb-comment a-h">
+    <p class="fb-comment-title fb-comment-title-hidden"><span>Facebook Comments</span><i></i></p>
+    <div class="fb-comments-content" id="aHR0cDovL21hbmdhbmVsby5jb20vbWFuZ2EvemVyb19wb2ludF9pZG9s"></div>
+    </div>
+    <script type="text/javascript" src="https://manganelo.com/themes/hm/js/custom-story.js?v=1.1.4"></script> </div> -->
+</div>

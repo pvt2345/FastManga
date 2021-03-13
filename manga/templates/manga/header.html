@@ -1,0 +1,33 @@
+<div class="container container-header">
+    <div class="logo">
+        <a href="/" title="Manga Online">
+            {% load static %}
+            <img src="{% static 'img/logo_small.png' %}" alt="Manga Online" title="Manga Online">
+        </a>
+    </div>
+    <div class="container-header-top">
+        <div class="box-search">
+            <form name="frmsearch">
+                <input id="search-story" autocomplete="off" placeholder="Tìm kiếm" class="search-story searchi">
+                    <div id="SearchResult">
+                        <ul></ul>
+                            <div id="search-footer" class="searchf">
+                        </div>
+                    </div>
+                <input style="display: none;">
+            </form>
+        </div>
+        <div class="box-user-options">
+            <a rel="nofollow" href="{% url 'manga:login' %}" class="user-login">Đăng nhập</a>
+            <a rel="nofollow" href="{% url 'manga:register' %}" class="user-register">Đăng ký</a>
+            <!-- <i class="mode-changer"></i> -->
+        </div>
+    </div>
+    <a class="header-mobile-menu">MENU</a>
+    <div class="header-menu">
+        <a class="a-h" href="{% url 'manga:home' %}" title="Manga Online">MANGA ONLINE</a>
+        <a class="a-h" href="{% url 'manga:all_manga' %}" title="LATEST MANGA">LATEST MANGA</a>
+        <a class="a-h" href="{% url 'manga:all_manga' %}" title="HOT MANGA">HOT MANGA</a>
+        <a class="a-h" href="{% url 'manga:all_manga' %}" title="NEWEST MANGA">NEWEST MANGA</a>
+    </div>
+</div>
