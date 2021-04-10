@@ -49,7 +49,6 @@ def all_manga(request):
     return HttpResponse("day la trang view truyen")
 
 def detail_manga(request, manga_code):
-
     top_10_popular_manga_query_set = Manga.objects.order_by('-views')[:10]
     top_10_popular_mangas = []
     for item in top_10_popular_manga_query_set:
@@ -86,5 +85,10 @@ def detail_manga(request, manga_code):
     print(context)
     return HttpResponse(template.render(context, request))
     
-def chapter(request):
-    return HttpResponse("day la trang chapter")
+def chapter(request, manga_code, chapter_code):
+    # return HttpResponse("day la trang chapter %s cua %s" % (chapter_code, manga_code))
+    manga = Manga.objects.get(code=manga_code) 
+    chapter = Chapter.objects.get(manga=manga.id, code=chapter_code)
+    context = {'chapter' : chapter, 'manga' : manga}
+    template = loader.get_template('manga/chapter.html')
+    return HttpResponse(template.render(context, request))

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FaManga - Đọc truyện tranh online</title>
+        {% load static %}
+        <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+        <link rel="stylesheet" href="{% static 'css/c-style.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/tooltip.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/c-style-search.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/c-style-chapter.css' %}" />
+        <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700,700italic&subset=latin,vietnamese' rel='stylesheet' />
+        <script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/owl.carousel.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/tooltip.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/fsearch.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/changes-mode-chapter.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/custom-chapter.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/lazysizes.min.js' %}"></script>
+        <!-- <link rel="stylesheet" href="https://manganelo.com/themes/starrate/css/style.css" />
+        <script type="text/javascript" src="https://manganelo.com/themes/starrate/js/starwarsjs.js"></script> -->
+    </head>
+<body>
+    <div class="container">
+        <div class="panel-logo-chapter">
+            <a href="{% url 'manga:home' %}" title="Read Manga Online">
+            <img src="https://manganelo.com/themes/hm/images/logo-chap.png" alt="Read Manga Online - manganelo" title="Read Manga Online - manganelo">
+            </a>
+        </div>
+        <div class="panel-breadcrumb">
+            <a class="a-h" href="{% url 'manga:home' %}" title="Read Manga Online">Read Manga Online</a>
+            <span>»</span>
+            <a class="a-h" href="{% url 'manga:manga' manga.code %}" title="Zero Point Idol">Zero Point Idol</a>
+            <span>»</span>
+            <a class="a-h" href="{% url 'manga:chapter' manga.code chapter.code %}" title="Chapter 1: First encounter">Chapter 1: First Encounter</a>
+        </div>
+        <div class="panel-navigation">
+            <select class="navi-change-chapter">
+                <option data-c="1" selected="">{{chapter.name}}</option>
+            </select>
+            <div class="navi-change-chapter-btn">
+                <a rel="nofollow" class="navi-change-chapter-btn-next a-h" href="https://manganelo.com/chapter/zero_point_idol/chapter_2">NEXT CHAPTER<i></i>
+                </a>
+            </div> 
+            
+        </div>
+    </div>
+    <div class="container-chapter-reader">
+        <img src="https://s6.mkklcdnv6tempv3.com/mangakakalot/z1/zero_point_idol/chapter_1_first_encounter/1.jpg" alt="Zero Point Idol Chapter 1: First encounter page 1 - MangaNelo.com" title="Zero Point Idol Chapter 1: First encounter page 1 - MangaNelo.com" style="margin-top: 5px;">
+    </div>
+</body>
+</html>

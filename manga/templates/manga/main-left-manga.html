@@ -133,7 +133,7 @@
     <ul class="row-content-chapter">
     {% for chapter in chapters %}
         <li class="a-h">
-        <a rel="nofollow" class="chapter-name text-nowrap" href="#" title="{{ manga.name }} {{chapter.main.name}}">{{ chapter.main.name }}</a>
+        <a rel="nofollow" class="chapter-name text-nowrap" href="{% url 'manga:chapter' manga.code chapter.main.code %}" title="{{ manga.name }} {{chapter.main.name}}">{{ chapter.main.name }}</a>
         <span class="chapter-view text-nowrap">{{chapter.main.views}}</span>
         <span class="chapter-time text-nowrap" title="Jan 02,2021 10:01">{{chapter.updated_text}}</span>
         </li>               

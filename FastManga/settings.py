@@ -25,7 +25,7 @@ SECRET_KEY = 'wud$924@lcqw65tdsae*x%j@uw9vx15yn!ev9$$@_itm5+7sx@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['famanga.com', 'www.famanga.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
