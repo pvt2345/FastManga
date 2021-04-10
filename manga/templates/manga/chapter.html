@@ -51,7 +51,9 @@
         </div>
     </div>
     <div class="container-chapter-reader">
-        <img src="https://s6.mkklcdnv6tempv3.com/mangakakalot/z1/zero_point_idol/chapter_1_first_encounter/1.jpg" alt="Zero Point Idol Chapter 1: First encounter page 1 - MangaNelo.com" title="Zero Point Idol Chapter 1: First encounter page 1 - MangaNelo.com" style="margin-top: 5px;">
+        {% for num in num_pages %}
+        <img src="{% static 'manga/{{manga.code}}/{{chapter.code}}/num.jpg'%}" alt="{{manga.name}} {{chapter.name}} page num - Famanga" title="{{manga.name}} {{chapter.name}} page num - Famanga" style="margin-top: 5px;">
+        {% endfor %}
     </div>
 </body>
 </html>
