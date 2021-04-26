@@ -89,6 +89,7 @@ def chapter(request, manga_code, chapter_code):
     # return HttpResponse("day la trang chapter %s cua %s" % (chapter_code, manga_code))
     manga = Manga.objects.get(code=manga_code) 
     chapter = Chapter.objects.get(manga=manga.id, code=chapter_code)
-    context = {'chapter' : chapter, 'manga' : manga}
+    num_pages = range(chapter.num_page)
+    context = {'chapter' : chapter, 'manga' : manga, 'num_pages' : num_pages}
     template = loader.get_template('manga/chapter.html')
     return HttpResponse(template.render(context, request))

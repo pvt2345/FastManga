@@ -35,16 +35,16 @@
         <div class="panel-breadcrumb">
             <a class="a-h" href="{% url 'manga:home' %}" title="Read Manga Online">Read Manga Online</a>
             <span>»</span>
-            <a class="a-h" href="{% url 'manga:manga' manga.code %}" title="Zero Point Idol">Zero Point Idol</a>
+            <a class="a-h" href="{% url 'manga:manga' manga.code %}" title="Zero Point Idol">{{manga.name}}</a>
             <span>»</span>
-            <a class="a-h" href="{% url 'manga:chapter' manga.code chapter.code %}" title="Chapter 1: First encounter">Chapter 1: First Encounter</a>
+            <a class="a-h" href="{% url 'manga:chapter' manga.code chapter.code %}" title="Chapter 1: First encounter">{{chapter.name}}</a>
         </div>
         <div class="panel-navigation">
             <select class="navi-change-chapter">
                 <option data-c="1" selected="">{{chapter.name}}</option>
             </select>
             <div class="navi-change-chapter-btn">
-                <a rel="nofollow" class="navi-change-chapter-btn-next a-h" href="https://manganelo.com/chapter/zero_point_idol/chapter_2">NEXT CHAPTER<i></i>
+                <a rel="nofollow" class="navi-change-chapter-btn-next a-h" href="#">NEXT CHAPTER<i></i>
                 </a>
             </div> 
             
@@ -52,7 +52,7 @@
     </div>
     <div class="container-chapter-reader">
         {% for num in num_pages %}
-        <img src="{% static 'manga/{{manga.code}}/{{chapter.code}}/num.jpg'%}" alt="{{manga.name}} {{chapter.name}} page num - Famanga" title="{{manga.name}} {{chapter.name}} page num - Famanga" style="margin-top: 5px;">
+        <img src="/static/manga/{{manga.code}}/{{chapter.code}}/{{num}}.jpg" alt="{{manga.name}} {{chapter.name}} page num - Famanga" title="{{manga.name}} {{chapter.name}} page num - Famanga" style="margin-top: 5px;">
         {% endfor %}
     </div>
 </body>
